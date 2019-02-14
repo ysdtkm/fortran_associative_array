@@ -28,6 +28,7 @@ See `sample.f90` and `Makefile` for sample usage
 * Better key handling (insertion already exist, search not found, etc.)
 * Ordered derived type as a key
     * https://software.intel.com/en-us/forums/intel-fortran-compiler-for-linux-and-mac-os-x/topic/595015
+* `exists` should return pointer to the node found
 
 ## References
 * Treap https://en.wikipedia.org/wiki/Treap
