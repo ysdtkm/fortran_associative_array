@@ -5,18 +5,15 @@
 * An associative array for fortran, which enables fast insertion, deletion, and search
     * Roughly corresponds to `std::set` and `std::map` of C++ standard template library (STL)
 * Other operations allowed
-    * Obtain minimum/maximum item: O(log n); not implemented yet
-    * Destructive merge/split: O(1); not implemented yet
-    * Obtain size of an array: O(1)
-    
-|Operation|Cost|Note|
-|----|----|----|
-|Insertion|O(log n)| |
-|Deletion|O(log n)| |
-|Search|O(log n)| |
-|Max/min|O(log n)|Not implemented yet|
-|Merge/split|O(1)|Destructive; not implemented|
-|Obtain size|O(1)| |
+   
+  |Operation|Cost|Note|
+  |----|----|----|
+  |Insertion|O(log n)| |
+  |Deletion|O(log n)| |
+  |Search|O(log n)| |
+  |Max/min|O(log n)|Not implemented yet|
+  |Merge/split|O(1)|Destructive; not implemented|
+  |Obtain size|O(1)| |
 
 
 ## Usage
