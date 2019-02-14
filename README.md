@@ -15,7 +15,6 @@
   |Merge/split|O(1)|Destructive; not implemented|
   |Obtain size|O(1)| |
 
-
 ## Usage
 See `sample.f90` and `Makefile` for sample usage
 
