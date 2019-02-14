@@ -15,6 +15,7 @@
       |Merge/split|O(1)|Destructive; not implemented|
       |Obtain size|O(1)| |
       |Deep copy|O(n)|Not implemented|
+      |Conversion to sorted array|O(n)|Not implemented|
 
 ## Usage
 See `sample.f90` and `Makefile` for sample usage
