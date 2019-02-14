@@ -14,8 +14,8 @@
       |Max/min|O(log n)|Not implemented|
       |Merge/split|O(1)|Destructive; not implemented|
       |Obtain size|O(1)| |
-      |Deep copy|O(n)|Not implemented; DFS|
-      |Conversion to sorted array|O(n)|Not implemented; inorder|
+      |Deep copy|O(n)|Not implemented; preorder DFS|
+      |Conversion to sorted array|O(n)|Not implemented; inorder DFS|
 
 * Has its own random state; does not change Fortran's intrinsic random state or affect other objects
 
