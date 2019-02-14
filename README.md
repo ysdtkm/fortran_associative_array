@@ -12,7 +12,7 @@
       |Deletion|O(log n)| |
       |Search|O(log n)| |
       |Max/min|O(log n)|Not implemented|
-      |Merge/split|O(1)|Destructive; not implemented|
+      |Merge/split|O(1)|Not implemented; destructive|
       |Obtain size|O(1)| |
       |Deep copy|O(n)|Not implemented; preorder DFS|
       |Conversion to sorted array|O(n)|Not implemented; inorder DFS|
