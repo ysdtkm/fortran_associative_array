@@ -4,16 +4,17 @@
 ## Purpose
 * An associative array for fortran, which enables fast insertion, deletion, and search
     * Roughly corresponds to `std::set` and `std::map` of C++ standard template library (STL)
-
-  |Operation|Cost|Note|
-  |----|----|----|
-  |Insertion|O(log n)| |
-  |Deletion|O(log n)| |
-  |Search|O(log n)| |
-  |Max/min|O(log n)|Not implemented|
-  |Merge/split|O(1)|Destructive; not implemented|
-  |Obtain size|O(1)| |
-  |Deep copy|O(n)|Not implemented|
+    * Operations allowed by the data structure
+    
+      |Operation|Cost|Note|
+      |----|----|----|
+      |Insertion|O(log n)| |
+      |Deletion|O(log n)| |
+      |Search|O(log n)| |
+      |Max/min|O(log n)|Not implemented|
+      |Merge/split|O(1)|Destructive; not implemented|
+      |Obtain size|O(1)| |
+      |Deep copy|O(n)|Not implemented|
 
 ## Usage
 See `sample.f90` and `Makefile` for sample usage
