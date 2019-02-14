@@ -13,6 +13,7 @@ See main.f90 and Makefile
 ## Todo
 * Better key handling (insertion already exist, search not found, etc.)
 * Second argument (i.e., value of the dictionary)
+    * Currently it is just implemented as a multiset rather than a dictionary
 * Ordered derived type as a key
     * https://software.intel.com/en-us/forums/intel-fortran-compiler-for-linux-and-mac-os-x/topic/595015
 
