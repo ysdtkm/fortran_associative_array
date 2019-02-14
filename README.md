@@ -1,7 +1,7 @@
 # Fortran associative array (A.K.A. hash table or dictionary)
 * Implemented with treap, a clever randomized binary search tree
 
-## Purpose
+## Specifications
 * An associative array for fortran, which enables fast insertion, deletion, and search
     * Roughly corresponds to `std::set` and `std::map` of C++ standard template library (STL)
     * Operations allowed by the data structure
@@ -16,6 +16,8 @@
       |Obtain size|O(1)| |
       |Deep copy|O(n)|Not implemented|
       |Conversion to sorted array|O(n)|Not implemented|
+
+* Has its own random state; does not change Fortran's intrinsic random state or affect other objects
 
 ## Usage
 See `sample.f90` and `Makefile` for sample usage
