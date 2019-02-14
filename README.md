@@ -1,5 +1,6 @@
 # Fortran associative array (A.K.A. hash table or dictionary)
 * Implemented with treap, a clever randomized binary search tree
+    * Technically, it's not a hash table
 
 ## Specifications
 * An associative array for fortran, which enables fast insertion, deletion, and search
