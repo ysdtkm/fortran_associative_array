@@ -10,7 +10,7 @@
     * Obtain size of an array: O(1)
 
 ## Usage
-See `main.f90` and `Makefile` for sample usage
+See `sample.f90` and `Makefile` for sample usage
 
 ## Todo
 * Better key handling (insertion already exist, search not found, etc.)

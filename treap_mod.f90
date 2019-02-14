@@ -16,7 +16,7 @@ module treap_mod
     ! Low level data structure and operations of treap
     type(node), pointer :: left => null(), right => null()
     keytype1 :: key
-    integer :: pri
+    integer :: pri  ! min-heap
     integer :: cnt = 1
   end type node
 

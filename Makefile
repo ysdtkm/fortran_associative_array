@@ -11,7 +11,7 @@ else
 endif
 MACROS = -DINT  # STRING or INT
 
-$(TARGET): main.o treap_mod.o
+$(TARGET): sample.o treap_mod.o
 	$(FC) $(MACROS) $(FFLAGS) $^ -o $@
 
 %.o: %.f90
@@ -20,7 +20,7 @@ $(TARGET): main.o treap_mod.o
 %.mod: %.o %.f90
 	@:
 
-main.o: treap_mod.mod
+sample.o: treap_mod.mod
 
 clean:
 	rm -rf *.o *.mod *.log $(TARGET) core.*
