@@ -1,8 +1,9 @@
 # Fortran associative array (A.K.A. hash table or dictionary)
-* Implemented with treap, a randomized binary search tree
+* Implemented with treap, a clever randomized binary search tree
 
 ## Purpose
 * An associative array for fortran, which enables insertion, deletion, and search for O(log n) cost
+    * Roughly corresponds to `std::set` and `std::map` of C++ standard template library (STL)
 * Other operations allowed
     * Obtain minimum/maximum item: O(log n); not implemented yet
     * Obtain size of an array: O(1)
