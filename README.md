@@ -1,4 +1,5 @@
-# Fortran associative array (A.K.A. hash table or dictionary) with treap
+# Fortran associative array (A.K.A. hash table or dictionary)
+* Implemented with treap
 
 ## Purpose
 * An associative array for fortran, which enables insertion, deletion, and search for O(log n) cost
