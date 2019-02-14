@@ -4,7 +4,7 @@
 ## Purpose
 * An associative array for fortran, which enables insertion, deletion, and search for O(log n) cost
 * Other operations allowed
-    * Obtain minimum/maximum item: O(log n)
+    * Obtain minimum/maximum item: O(log n); not implemented yet
     * Obtain size of an array: O(1)
 
 ## Usage
