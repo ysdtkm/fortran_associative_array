@@ -6,7 +6,7 @@
     * Roughly corresponds to `std::set` and `std::map` of C++ standard template library (STL)
 * Other operations allowed
     * Obtain minimum/maximum item: O(log n); not implemented yet
-    * Merge/split: O(1); not implemented yet
+    * Destructive merge/split: O(1); not implemented yet
     * Obtain size of an array: O(1)
 
 ## Usage
