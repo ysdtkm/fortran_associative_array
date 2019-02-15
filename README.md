@@ -30,6 +30,10 @@ See `sample.f90` and `Makefile` for sample usage
     * https://software.intel.com/en-us/forums/intel-fortran-compiler-for-linux-and-mac-os-x/topic/595015
 * `exists` should return pointer to the node found
 
+## Tested with
+* https://arc033.contest.atcoder.jp/submissions/4270463
+* Valgrind for memory leak
+
 ## References
 * Treap https://en.wikipedia.org/wiki/Treap
 * Treap https://www.slideshare.net/iwiwi/2-12188757
