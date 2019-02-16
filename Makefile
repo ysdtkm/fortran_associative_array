@@ -11,7 +11,7 @@ else
 endif
 INCLUDE := -I.
 
-$(TARGET): sample.o treap_mod.o
+$(TARGET): sample.o treap_mod.o treap_struct.o
 	$(FC) $(MACROS) $(FFLAGS) $(INCLUDE) $^ -o $@
 
 %.o: %.f90
@@ -21,6 +21,7 @@ $(TARGET): sample.o treap_mod.o
 	@:
 
 sample.o: treap_mod.mod
+treap_mod.o: treap_struct.mod
 
 clean:
 	rm -rf *.o *.mod *.gch *.log $(TARGET) core.*
