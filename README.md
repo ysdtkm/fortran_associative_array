@@ -14,6 +14,7 @@
       |Existence/lookup           |O(log n) |`exists` and `get_val` functions              |
       |Max/min/k-th element       |O(log n) |`get_kth_key` function                        |
       |Count                      |O(1)     |`get_size` function                           |
+      |Clear                      |O(n)     |Implicitly called as a destructor             |
 
     * Other operations allowed by the data structure (not implemented)
     
