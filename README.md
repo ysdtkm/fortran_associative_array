@@ -13,7 +13,7 @@
       |Deletion                   |O(log n) |`remove` subroutine                           |
       |Search                     |O(log n) |`find` function                               |
       |Max/min/k-th element       |O(log n) |`get_kth_key` function                        |
-      |Obtain size                |O(1)     |`get_size` function                           |
+      |Count                      |O(1)     |`get_size` function                           |
 
     * Other operations allowed by the data structure (not implemented)
     
