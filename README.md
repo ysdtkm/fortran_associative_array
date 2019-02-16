@@ -2,29 +2,28 @@
 A scalable associative array, known as "hash table" or "dictionary" data types for Fortran
 
 ## Specifications
-* An associative array for fortran, which enables fast insertion, deletion, and search
-    * Internal data structure is treap (randomized binary search tree)
-    * Roughly corresponds to `std::map` (C++) or `dict` (Python)
-    * Operations already implemented
-    
-      |Operation                  |Cost     |Note                                          |
-      |----                       |----     |----                                          |
-      |Insertion/assignment       |O(log n) |`insert_or_assign` subroutine                 |
-      |Deletion                   |O(log n) |`remove` subroutine                           |
-      |Existence/lookup           |O(log n) |`exists` and `get_val` functions              |
-      |Max/min/k-th element       |O(log n) |`get_kth_key` function                        |
-      |Count                      |O(1)     |`get_size` function                           |
-      |Clear                      |O(n)     |Implicitly called as a destructor             |
+* Internal data structure is treap (randomized binary search tree)
+* Roughly corresponds to `std::map` (C++) or `dict` (Python)
+* Operations already implemented
 
-    * Other operations allowed by the data structure (not implemented)
-    
-      |Operation                  |Cost                     |Note                                          |
-      |----                       |----                     |----                                          |
-      |Merge/split                |O(log n)                 |Destructive                                   |
-      |(lower\|upper)\_bound      |O(log n)                 |                                              |
-      |Range search               |O(log n + elements found)|                                              |
-      |Deep copy                  |O(n)                     |Preorder DFS                                  |
-      |Conversion to sorted array |O(n)                     |`show` subroutine is similar                  |
+  |Operation                  |Cost     |Note                                          |
+  |----                       |----     |----                                          |
+  |Insertion/assignment       |O(log n) |`insert_or_assign` subroutine                 |
+  |Deletion                   |O(log n) |`remove` subroutine                           |
+  |Existence/lookup           |O(log n) |`exists` and `get_val` functions              |
+  |Max/min/k-th element       |O(log n) |`get_kth_key` function                        |
+  |Count                      |O(1)     |`get_size` function                           |
+  |Clear                      |O(n)     |Implicitly called as a destructor             |
+
+* Other operations allowed by the data structure (not implemented)
+
+  |Operation                  |Cost                     |Note                                          |
+  |----                       |----                     |----                                          |
+  |Merge/split                |O(log n)                 |Destructive                                   |
+  |(lower\|upper)\_bound      |O(log n)                 |                                              |
+  |Range search               |O(log n + elements found)|                                              |
+  |Deep copy                  |O(n)                     |Preorder DFS                                  |
+  |Conversion to sorted array |O(n)                     |`show` subroutine is similar                  |
 
 ## Usage
 * See `sample.f90` for sample usage
