@@ -6,18 +6,19 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
 * Roughly corresponds to `std::map` (C++) or `dict` (Python)
     * A **key** can be `characters` (either fixed or arbitrary length), an `integer`, or a `real`
     * A **value** can be any fortran intrinsic data type. A **copy** of the value is stored in the `dict` object
+    * Does not affect Fortran's intrinsic random state
 * Implemented operations
 
-  |Operation                  |Cost     |Note                                          |
-  |----                       |----     |----                                          |
-  |Insertion/assignment       |O(log n) |`insert_or_assign` subroutine                 |
-  |Deletion                   |O(log n) |`remove` subroutine; error if not exist       |
-  |Existence of a key         |O(log n) |`exists` function                             |
-  |Reference                  |O(log n) |`get_val` function; error if not exist        |
-  |Max/min/k-th element       |O(log n) |`get_kth_key` function; error if not exist    |
-  |Count                      |O(1)     |`get_size` function                           |
-  |Retrieve sorted array      |O(n)     |`get_keys_vals` subroutine                    |
-  |Clear                      |O(n)     |Implicitly called as a destructor             |
+  |Operation                  |Cost     |Implementation                    |Note                   |
+  |----                       |----     |----                              |----                   |
+  |Insertion/assignment       |O(log n) |Subroutine `insert_or_assign`     |                       |
+  |Deletion                   |O(log n) |Subroutine `remove`               |Error if not exist     |
+  |Existence of a key         |O(log n) |Function `exists` (logical)       |                       |
+  |Reference                  |O(log n) |Function `get_val` (value type)   |Error if not exist     |
+  |Get max/min/k-th key       |O(log n) |Function `get_kth_key` (key type) |Error if out of bounds; 1-based |
+  |Count                      |O(1)     |Function `get_size` (integer)     |                       |
+  |Retrieve sorted array      |O(n)     |Subroutine `get_keys_vals`        |                       |
+  |Clear                      |O(n)     |Implicitly called as a destructor |                       |
 
 * Other operations allowed by the data structure (not implemented)
 
