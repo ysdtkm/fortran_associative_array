@@ -6,7 +6,7 @@ module dict_mod
   implicit none
 
   private
-  public :: dict, get_val, insert_or_assign, exists, remove, show, get_size, get_kth_key
+  public :: dict, get_val, insert_or_assign, exists, remove, get_keys_vals, get_size, get_kth_key
 
   type dict
     type(node), pointer :: root => null()
@@ -92,16 +92,17 @@ module dict_mod
     end if
   end function get_kth_key
 
-  subroutine show(t, keys, vals, n)  ! ttk rename
+  subroutine get_keys_vals(t, keys, vals, n)
     implicit none
     type(dict), intent(in) :: t
     integer, intent(in) :: n
     integer :: counter
     keytype2 :: keys(n)
     valtype :: vals(n)
+    if (my_count(t%root) /= n) stop 5
     counter = 0
-    call inorder(t%root, keys, vals, counter)  ! ttk rename
-  end subroutine show
+    call inorder(t%root, keys, vals, counter)
+  end subroutine get_keys_vals
 
   function get_size(t)
     implicit none

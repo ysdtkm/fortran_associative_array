@@ -171,19 +171,19 @@ module treap_struct
     nullify(root)
   end subroutine delete_all
 
-  recursive subroutine inorder(root, keys, vals, known)  ! ttk known
+  recursive subroutine inorder(root, keys, vals, counter)
     implicit none
     type(node), pointer, intent(in) :: root
     keytype2, intent(inout) :: keys(:)
     valtype, intent(inout) :: vals(:)
-    integer, intent(inout) :: known
+    integer, intent(inout) :: counter
     if (.not. associated(root)) return
 
-    call inorder(root%left, keys, vals, known)
-    known = known + 1
-    keys(known) = root%key
-    vals(known) = root%val
-    call inorder(root%right, keys, vals, known)
+    call inorder(root%left, keys, vals, counter)
+    counter = counter + 1
+    keys(counter) = root%key
+    vals(counter) = root%val
+    call inorder(root%right, keys, vals, counter)
   end subroutine inorder
 end module treap_struct
 

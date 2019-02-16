@@ -1,6 +1,6 @@
 #include <dtypes.h>
 program main
-  use dict_mod, only: dict, insert_or_assign, get_val, remove, show, get_size, exists
+  use dict_mod, only: dict, insert_or_assign, get_val, remove, get_keys_vals, get_size, exists
   implicit none
 
   integer, parameter :: n = 100
@@ -26,7 +26,7 @@ program main
   m = get_size(t)
   print *, m, "unique elements out of ", n
   allocate(keys(m), vals(m))
-  call show(t, keys, vals, m)
+  call get_keys_vals(t, keys, vals, m)
   write (*, "(10i5)") keys
   deallocate(keys, vals)
 
