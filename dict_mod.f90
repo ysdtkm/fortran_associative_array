@@ -96,9 +96,9 @@ module dict_mod
     implicit none
     type(dict), intent(in) :: t
     integer, intent(in) :: n
+    keytype2, intent(out) :: keys(n)
+    valtype, intent(out) :: vals(n)
     integer :: counter
-    keytype2 :: keys(n)
-    valtype :: vals(n)
     if (my_count(t%root) /= n) stop 5
     counter = 0
     call inorder(t%root, keys, vals, counter)
