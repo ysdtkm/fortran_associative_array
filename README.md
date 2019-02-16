@@ -4,7 +4,7 @@ A scalable associative array, known as "hash table" or "dictionary" data types f
 ## Specifications
 * Internal data structure is treap (randomized binary search tree)
 * Roughly corresponds to `std::map` (C++) or `dict` (Python)
-* Operations already implemented
+* Implemented operations
 
   |Operation                  |Cost     |Note                                          |
   |----                       |----     |----                                          |
