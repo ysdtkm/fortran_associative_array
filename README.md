@@ -4,7 +4,7 @@ A scalable associative array, known as "hash table" or "dictionary" data types f
 ## Specifications
 * Internal data structure is treap (randomized binary search tree)
 * Roughly corresponds to `std::map` (C++) or `dict` (Python)
-    * A key can be `character`s (either fixed or arbitrary length), an `integer`, or a `real`
+    * A key can be `character` (either fixed or arbitrary length), an `integer`, or a `real`
     * A value can be any fortran intrinsic data type
 * Implemented operations
 
