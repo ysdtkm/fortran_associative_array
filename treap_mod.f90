@@ -10,7 +10,7 @@ module treap_mod
   implicit none
   private
 
-  public :: treap, find, add, remove, show, get_size
+  public :: treap, find, add, remove, show, get_size, get_kth_key
 
   type node
     ! Low level data structure and operations of treap
@@ -66,6 +66,21 @@ module treap_mod
     keytype2, intent(in) :: key
     t%root => erase(t%root, key)
   end subroutine remove
+
+  function get_kth_key(t, k)
+    implicit none
+    type(treap), intent(in) :: t
+    integer, intent(in) :: k
+    type(node), pointer :: res
+    integer :: get_kth_key
+    res => kth_node(t%root, k)
+    if (associated(res)) then
+      get_kth_key = res%key
+    else
+      print *, "get_kth_key failed"
+      stop 2
+    end if
+  end function get_kth_key
 
   subroutine show(t)
     implicit none
@@ -212,6 +227,22 @@ module treap_mod
       res => exists(root%right, key)
     end if
   end function exists
+
+  recursive function kth_node(root, k) result(res)
+    implicit none
+    type(node), pointer, intent(in) :: root
+    integer, intent(in) :: k
+    type(node), pointer :: res
+    if (.not. associated(root)) then
+      res => null()
+    else if (k <= my_count(root%left)) then
+      res => kth_node(root%left, k)
+    else if (k == my_count(root%left) + 1) then
+      res => root
+    else
+      res => kth_node(root%right, k - my_count(root%left) - 1)
+    end if
+  end function kth_node
 
   recursive subroutine delete_all(root)
     implicit none
