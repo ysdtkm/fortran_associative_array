@@ -4,7 +4,7 @@
 
 ## Specifications
 * An associative array for fortran, which enables fast insertion, deletion, and search
-    * Roughly corresponds to `std::map` of C++ or `dict` of Python
+    * Roughly corresponds to `std::map` (C++) or `dict` (Python)
     * Operations already implemented
     
       |Operation                  |Cost     |Note                                          |
