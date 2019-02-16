@@ -22,6 +22,7 @@
       |Assign                     |O(log n) |                                              |
       |Merge/split                |O(log n) |Destructive                                   |
       |(lower\|upper)\_bound      |O(log n) |                                              |
+      |Range search               |>O(log n)|                                              |
       |Deep copy                  |O(n)     |Preorder DFS                                  |
       |Conversion to sorted array |O(n)     |`show` subroutine is similar                  |
 
