@@ -13,7 +13,7 @@ A scalable associative array, known as "hash table" or "dictionary" data types f
   |Existence/lookup           |O(log n) |`exists` and `get_val` functions              |
   |Max/min/k-th element       |O(log n) |`get_kth_key` function                        |
   |Count                      |O(1)     |`get_size` function                           |
-  |Conversion to sorted array |O(n)     |`get_keys_vals` subroutine                    |
+  |Retrieve sorted array      |O(n)     |`get_keys_vals` subroutine                    |
   |Clear                      |O(n)     |Implicitly called as a destructor             |
 
 * Other operations allowed by the data structure (not implemented)
