@@ -1,13 +1,14 @@
 #include <dtypes.h>
-module treap_mod
+module treap_mod  ! ttk: rename to dict_mod
+  ! High level wrapper for randomized treap
+
   use treap_struct, only: node, my_count, insert, erase, exists, kth_node, delete_all, inorder
   implicit none
+
   private
+  public :: treap, find, add, key_exists, remove, show, get_size, get_kth_key
 
-  public :: treap, find, add, remove, show, get_size, get_kth_key
-
-  type treap
-    ! High level wrapper for randomized treap
+  type treap  ! ttk: rename to dict
     type(node), pointer :: root => null()
     integer :: randstate = 1231767121
     contains
@@ -31,7 +32,7 @@ module treap_mod
     xorshift32 = ieor(xorshift32, ishft(xorshift32, 15))
   end function xorshift32
 
-  function find(t, key)
+  function find(t, key)  ! ttk: rename to get_val
     implicit none
     type(treap), intent(in) :: t
     keytype2, intent(in) :: key
@@ -44,13 +45,29 @@ module treap_mod
     find = nd%val
   end function find
 
-  subroutine add(t, key, val)
+  function key_exists(t, key)
+    implicit none
+    type(treap), intent(in) :: t
+    keytype2, intent(in) :: key
+    type(node), pointer :: nd
+    logical :: key_exists
+    nd => exists(t%root, key)
+    key_exists = (associated(nd))
+  end function key_exists
+
+  subroutine add(t, key, val)  ! ttk: rename to insert_or_assign
     implicit none
     type(treap), intent(inout) :: t
     keytype2, intent(in) :: key
     valtype, intent(in) :: val
-    t%root => insert(t%root, key, val, t%randstate)
-    t%randstate = xorshift32(t%randstate)
+    type(node), pointer :: nd
+    nd => exists(t%root, key)
+    if (associated(nd)) then
+      nd%val = val
+    else
+      t%root => insert(t%root, key, val, t%randstate)
+      t%randstate = xorshift32(t%randstate)
+    end if
   end subroutine add
 
   subroutine remove(t, key)

@@ -1,9 +1,10 @@
 #include <dtypes.h>
 module treap_struct
+  ! Low level data structure and operations of treap
+
   implicit none
 
   type node
-    ! Low level data structure and operations of treap
     type(node), pointer :: left => null(), right => null()
     keytype1 :: key
     valtype :: val
@@ -126,7 +127,7 @@ module treap_struct
     if (associated(res)) call update(res)
   end function erase
 
-  recursive function exists(root, key) result(res)
+  recursive function exists(root, key) result(res)  ! ttk: rename to find_node
     implicit none
     type(node), pointer, intent(in) :: root
     keytype2, intent(in) :: key

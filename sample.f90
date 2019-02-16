@@ -1,6 +1,6 @@
 #include <dtypes.h>
 program main
-  use treap_mod, only: treap, add, find, remove, show, get_size
+  use treap_mod, only: treap, add, find, remove, show, get_size, key_exists
   implicit none
 
   integer, parameter :: n = 10000
@@ -21,17 +21,17 @@ program main
     call add(t, a(i), float(a(i)))
   end do
 
-  print *, n, get_size(t)
+  print *, get_size(t), "unique elements out of ", n
 
   do i = 1, n
     b = find(t, a(i))
-    print *, b
+    if (abs(a(i) - b) > 0.0001) stop 3
   end do
 
-  ! call show(t)
-
   do i = 1, n
-    call remove(t, a(i))
+    if (key_exists(t, a(i))) then
+      call remove(t, a(i))
+    end if
   end do
 
   call show(t)

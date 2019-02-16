@@ -1,4 +1,3 @@
-! Only for integer
 program get_kth
   use treap_mod, only: treap, add, find, remove, show, get_size, get_kth_key
   implicit none
