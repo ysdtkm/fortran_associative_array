@@ -1,12 +1,4 @@
-#if defined STRING
-#  define keytype1 character(:),allocatable
-#  define keytype2 character(*)
-#elif defined INT
-#  define keytype1 integer(4)
-#  define keytype2 integer(4)
-#endif
-#define valtype real(4)
-
+#include <dtypes.h>
 module treap_mod
   implicit none
   private

@@ -9,13 +9,13 @@ ifeq ($(DEBUG),yes)
 else
   FFLAGS := -cpp -Ofast -march=native -fbacktrace -fdump-core
 endif
-MACROS = -DINT  # STRING or INT
+INCLUDE := -I.
 
 $(TARGET): sample.o treap_mod.o
-	$(FC) $(MACROS) $(FFLAGS) $^ -o $@
+	$(FC) $(MACROS) $(FFLAGS) $(INCLUDE) $^ -o $@
 
 %.o: %.f90
-	$(FC) $(MACROS) -c $(FFLAGS) $<
+	$(FC) $(MACROS) -c $(FFLAGS) $(INCLUDE) $<
 
 %.mod: %.o %.f90
 	@:
@@ -23,7 +23,7 @@ $(TARGET): sample.o treap_mod.o
 sample.o: treap_mod.mod
 
 clean:
-	rm -rf *.o *.mod *.log $(TARGET) core.*
+	rm -rf *.o *.mod *.gch *.log $(TARGET) core.*
 
 .PHONY: clean
 
