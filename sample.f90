@@ -3,6 +3,7 @@
 #elif defined INT
 #  define dat a
 #endif
+#define valtype real(4)
 
 program main
   use treap_mod, only: treap, add, find, remove, show, get_size
@@ -13,7 +14,7 @@ program main
   integer :: i, a(n), seed(100)
   real(8) :: r
   character(20) :: c(n)
-  logical :: b
+  valtype :: b
 
   seed(:) = 0
   call random_seed(put=seed)
@@ -25,14 +26,14 @@ program main
   end do
 
   do i = 1, n
-    call add(t, dat(i))
+    call add(t, dat(i), float(dat(i)))
   end do
 
   print *, n, get_size(t)
 
   do i = 1, n
     b = find(t, dat(i))
-    if (.not. b) stop 2
+    print *, b
   end do
 
   ! call show(t)

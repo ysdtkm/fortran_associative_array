@@ -5,6 +5,7 @@
 #  define keytype1 integer(4)
 #  define keytype2 integer(4)
 #endif
+#define valtype real(4)
 
 module treap_mod
   implicit none
@@ -16,6 +17,7 @@ module treap_mod
     ! Low level data structure and operations of treap
     type(node), pointer :: left => null(), right => null()
     keytype1 :: key
+    valtype :: val
     integer :: pri  ! min-heap
     integer :: cnt = 1
   end type node
@@ -49,15 +51,21 @@ module treap_mod
     implicit none
     type(treap), intent(in) :: t
     keytype2, intent(in) :: key
-    logical :: find
-    find = associated(exists(t%root, key))
+    type(node), pointer :: nd
+    valtype :: find
+    nd => exists(t%root, key)
+    if (.not. associated(nd)) then
+      stop 105
+    end if
+    find = nd%val
   end function find
 
-  subroutine add(t, key)
+  subroutine add(t, key, val)
     implicit none
     type(treap), intent(inout) :: t
     keytype2, intent(in) :: key
-    t%root => insert(t%root, key, t%randstate)
+    valtype, intent(in) :: val
+    t%root => insert(t%root, key, val, t%randstate)
     t%randstate = xorshift32(t%randstate)
   end subroutine add
 
@@ -145,27 +153,29 @@ module treap_mod
     call update(tmp)
   end function rotate_cw
 
-  recursive function insert(root, key, pri) result(res)
+  recursive function insert(root, key, val, pri) result(res)
     implicit none
     type(node), pointer, intent(in) :: root
     integer, intent(in) :: pri
     keytype2, intent(in) :: key
+    valtype, intent(in) :: val
     type(node), pointer :: res
 
     if (.not. associated(root)) then
       allocate(res)
       res%key = key
       res%pri = pri
+      res%val = val
     else
       res => root
       if (key > root%key) then
-        root%right => insert(root%right, key, pri)
+        root%right => insert(root%right, key, val, pri)
         call update(root)
         if (root%pri > root%right%pri) then
           res => rotate_ccw(res)
         end if
       else
-        root%left => insert(root%left, key, pri)
+        root%left => insert(root%left, key, val, pri)
         call update(root)
         if (root%pri > root%left%pri) then
           res => rotate_cw(res)
@@ -262,7 +272,7 @@ module treap_mod
     if (.not. associated(root)) return
 
     call inorder(root%left)
-    print *, "key:", root%key, ", pri:", root%pri, ", size:", root%cnt
+    print *, "key:", root%key, "val:", root%val, ", pri:", root%pri, ", size:", root%cnt
     call inorder(root%right)
   end subroutine inorder
 
