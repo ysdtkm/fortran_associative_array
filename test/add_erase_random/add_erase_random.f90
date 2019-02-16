@@ -1,6 +1,6 @@
 #include <dtypes.h>
 program add_erase_random
-  use dict_mod, only: dict, insert_or_assign, get_val, remove, show, get_size, exists
+  use dict_mod, only: dict, insert_or_assign, get_val, remove, get_size, exists
   implicit none
 
   integer, parameter :: n = 10000
