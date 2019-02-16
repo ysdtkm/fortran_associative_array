@@ -4,14 +4,14 @@
 
 ## Specifications
 * An associative array for fortran, which enables fast insertion, deletion, and search
-    * Roughly corresponds to `std::set` and `std::map` of C++ standard template library (STL)
+    * Roughly corresponds to `std::map` of C++ standard template library (STL) or `dict` type of Python
     * Operations already implemented
     
       |Operation                  |Cost     |Note                                          |
       |----                       |----     |----                                          |
-      |Insertion/assignment       |O(log n) |`add` subroutine                              |
+      |Insertion/assignment       |O(log n) |`insert_or_assign` subroutine                 |
       |Deletion                   |O(log n) |`remove` subroutine                           |
-      |Existence/lookup           |O(log n) |`find` function                               |
+      |Existence/lookup           |O(log n) |`exists` and `get_val` functions              |
       |Max/min/k-th element       |O(log n) |`get_kth_key` function                        |
       |Count                      |O(1)     |`get_size` function                           |
 
