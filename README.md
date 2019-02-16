@@ -23,6 +23,7 @@
 See `sample.f90` and `Makefile` for sample usage
 
 ## Todo
+* Continuous integration
 * Second argument (i.e., value of the dictionary)
     * Currently it is just implemented as a multiset rather than a dictionary
 * Better key handling (insertion already exist, search not found, etc.)
