@@ -3,9 +3,9 @@ dist: xenial
 sudo: required
 
 install:
-  - sudo apt-get install gfortran
+  - sudo apt-get install gfortran valgrind
 
 script:
   - cd ${TRAVIS_BUILD_DIR}/test/add_erase_random && make && ./a.out
-  - cd ${TRAVIS_BUILD_DIR}/test/valgrind && make && valgrind --leak-check=full ./a.out
+  - cd ${TRAVIS_BUILD_DIR}/test/valgrind && make && valgrind --leak-check=full --error-exitcode=87 ./a.out
 
