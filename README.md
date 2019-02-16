@@ -9,9 +9,9 @@
     
       |Operation                  |Cost     |Note                                          |
       |----                       |----     |----                                          |
-      |Insertion                  |O(log n) |`add` subroutine                              |
+      |Insertion/assignment       |O(log n) |`add` subroutine                              |
       |Deletion                   |O(log n) |`remove` subroutine                           |
-      |Search                     |O(log n) |`find` function                               |
+      |Existence/lookup           |O(log n) |`find` function                               |
       |Max/min/k-th element       |O(log n) |`get_kth_key` function                        |
       |Count                      |O(1)     |`get_size` function                           |
 
@@ -19,7 +19,6 @@
     
       |Operation                  |Cost     |Note                                          |
       |----                       |----     |----                                          |
-      |Assign                     |O(log n) |                                              |
       |Merge/split                |O(log n) |Destructive                                   |
       |(lower\|upper)\_bound      |O(log n) |                                              |
       |Range search               |Depends  |                                              |
