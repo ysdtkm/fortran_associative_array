@@ -12,7 +12,7 @@ else
 endif
 INCLUDES = -I../../
 
-$(TARGET): add_erase_random.o treap_mod.o treap_struct.o
+$(TARGET): add_erase_random.o dict_mod.o treap_struct.o
 	$(FC) $(INCLUDES) $(FFLAGS) $^ -o $@
 
 %.o: %.f90
@@ -21,8 +21,8 @@ $(TARGET): add_erase_random.o treap_mod.o treap_struct.o
 %.mod: %.o %.f90
 	@:
 
-add_erase_random.o: treap_mod.mod
-treap_mod.o: treap_struct.mod
+add_erase_random.o: dict_mod.mod
+dict_mod.o: treap_struct.mod
 
 clean:
 	rm -rf *.o *.cgh *.mod *.log $(TARGET) core.*
