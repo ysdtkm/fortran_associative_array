@@ -11,13 +11,13 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
 
   |Operation                  |Cost     |Implementation                    |Note                   |
   |----                       |----     |----                              |----                   |
-  |Insertion/assignment       |O(log n) |`insert_or_assign` subroutine     |                       |
-  |Deletion                   |O(log n) |`remove` subroutine               |Error if not exist     |
-  |Existence of a key         |O(log n) |`exists` function                 |                       |
-  |Reference                  |O(log n) |`get_val` function                |Error if not exist     |
-  |Max/min/k-th element       |O(log n) |`get_kth_key` function            |Error if out of bounds |
-  |Count                      |O(1)     |`get_size` function               |                       |
-  |Retrieve sorted array      |O(n)     |`get_keys_vals` subroutine        |                       |
+  |Insertion/assignment       |O(log n) |Subroutine `insert_or_assign`     |                       |
+  |Deletion                   |O(log n) |Subroutine `remove`               |Error if not exist     |
+  |Existence of a key         |O(log n) |Logical function `exists`         |                       |
+  |Reference                  |O(log n) |Function `get_val`                |Error if not exist     |
+  |Max/min/k-th element       |O(log n) |Function `get_kth_key`            |Error if out of bounds |
+  |Count                      |O(1)     |Integer function `get_size`       |                       |
+  |Retrieve sorted array      |O(n)     |Subroutine `get_keys_vals`        |                       |
   |Clear                      |O(n)     |Implicitly called as a destructor |                       |
 
 * Other operations allowed by the data structure (not implemented)
