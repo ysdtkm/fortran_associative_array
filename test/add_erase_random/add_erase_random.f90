@@ -1,19 +1,13 @@
-#if defined STRING
-#  define dat c
-#elif defined INT
-#  define dat a
-#endif
-
+#include <dtypes.h>
 program add_erase_random
-  use treap_mod, only: treap, add, find, remove, show, get_size
+  use dict_mod, only: dict, insert_or_assign, get_val, remove, show, get_size, exists
   implicit none
 
   integer, parameter :: n = 10000
-  type(treap) :: t
+  type(dict) :: t
   integer :: i, a(n), seed(100)
   real(8) :: r
-  character(20) :: c(n)
-  logical :: b
+  valtype :: b
 
   seed(:) = 0
   call random_seed(put=seed)
@@ -21,28 +15,27 @@ program add_erase_random
   do i = 1, n
     call random_number(r)
     a(i) = floor(r * n)
-    write(c(i), "(i10)") a(i)
   end do
 
   do i = 1, n
-    call add(t, dat(i))
-  end do
-
-  if (get_size(t) /= n) stop 1
-
-  do i = 1, n
-    b = find(t, dat(i))
-    if (.not. b) stop 2
+    call insert_or_assign(t, a(i), float(a(i)))
   end do
 
   do i = 1, n
-    call remove(t, dat(i))
+    b = get_val(t, a(i))
+    if (abs(b - a(i)) > 0.0001) stop 2
+  end do
+
+  do i = 1, n
+    if (exists(t, a(i))) then
+      call remove(t, a(i))
+    end if
   end do
 
   if (get_size(t) /= 0) stop 4
 
   do i = 1, n
-    call add(t, dat(i))
+    call insert_or_assign(t, a(i), float(a(i)))
   end do
 end program add_erase_random
 
