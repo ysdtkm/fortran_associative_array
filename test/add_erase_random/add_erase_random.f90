@@ -40,5 +40,9 @@ program add_erase_random
   end do
 
   if (get_size(t) /= 0) stop 4
+
+  do i = 1, n
+    call add(t, dat(i))
+  end do
 end program add_erase_random
 
