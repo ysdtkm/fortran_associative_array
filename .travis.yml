@@ -1,0 +1,10 @@
+dist: xenial
+
+sudo: required
+
+install:
+  - sudo apt-get install gfortran
+
+script:
+  - cd ${TRAVIS_BUILD_DIR}/test/add_erase_random && make && ./a.out
+
