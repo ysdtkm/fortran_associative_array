@@ -16,7 +16,7 @@
       |Max/min/k-th element|O(log n)|`get_kth_key` function|
       |Merge/split|O(log n)|Not implemented; destructive|
       |Obtain size|O(1)|`get_size` function|
-      |(lower|upper)\_bound|O(log n)|Not implemented|
+      |(lower\|upper)\_bound|O(log n)|Not implemented|
       |Deep copy|O(n)|Not implemented; preorder DFS|
       |Conversion to sorted array|O(n)|Not implemented; `show` subroutine is similar|
 
