@@ -13,7 +13,7 @@
       |Search|O(log n)|`find` function|
       |Max/min/k-th element|O(log n)|`get_kth_key` function|
       |Merge/split|O(log n)|Not implemented; destructive|
-      |Obtain size|O(1)| |
+      |Obtain size|O(1)|`get_size` function|
       |Deep copy|O(n)|Not implemented; preorder DFS|
       |Conversion to sorted array|O(n)|Not implemented; inorder DFS|
 
