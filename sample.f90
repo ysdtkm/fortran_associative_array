@@ -1,4 +1,3 @@
-#include <dtypes.h>
 program sample
   use dict_mod, only: dict, exists, get_size, get_val, insert_or_assign, remove
   implicit none
