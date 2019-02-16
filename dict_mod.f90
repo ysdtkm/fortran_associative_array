@@ -8,11 +8,11 @@ module dict_mod
   private
   public :: dict, get_val, insert_or_assign, exists, remove, show, get_size, get_kth_key
 
-  type dict  ! ttk: rename to dict
+  type dict
     type(node), pointer :: root => null()
     integer :: randstate = 1231767121
     contains
-    final :: destruct_treap
+    final :: destruct_dict
   end type dict
 
   contains
@@ -64,7 +64,7 @@ module dict_mod
     nd => find_node(t%root, key)
     if (associated(nd)) then
       nd%val = val
-    else
+    else  ! This implementation is not optimal
       t%root => insert(t%root, key, val, t%randstate)
       t%randstate = xorshift32(t%randstate)
     end if
@@ -105,10 +105,10 @@ module dict_mod
     get_size = my_count(t%root)
   end function get_size
 
-  subroutine destruct_treap(t)
+  subroutine destruct_dict(t)
     implicit none
     type(dict), intent(inout) :: t
     call delete_all(t%root)
-  end subroutine destruct_treap
+  end subroutine destruct_dict
 
 end module dict_mod
