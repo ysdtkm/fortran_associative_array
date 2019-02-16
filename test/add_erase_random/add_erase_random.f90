@@ -39,6 +39,6 @@ program add_erase_random
     call remove(t, dat(i))
   end do
 
-  if (get_size(t) /= 0) stop 3
+  if (get_size(t) /= 0) stop 4
 end program add_erase_random
 
