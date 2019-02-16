@@ -17,13 +17,13 @@
 
     * Other operations allowed by the data structure (not implemented)
     
-      |Operation                  |Cost     |Note                                          |
-      |----                       |----     |----                                          |
-      |Merge/split                |O(log n) |Destructive                                   |
-      |(lower\|upper)\_bound      |O(log n) |                                              |
-      |Range search               |Depends  |                                              |
-      |Deep copy                  |O(n)     |Preorder DFS                                  |
-      |Conversion to sorted array |O(n)     |`show` subroutine is similar                  |
+      |Operation                  |Cost                     |Note                                          |
+      |----                       |----                     |----                                          |
+      |Merge/split                |O(log n)                 |Destructive                                   |
+      |(lower\|upper)\_bound      |O(log n)                 |                                              |
+      |Range search               |O(log n + elements found)|                                              |
+      |Deep copy                  |O(n)                     |Preorder DFS                                  |
+      |Conversion to sorted array |O(n)                     |`show` subroutine is similar                  |
 
 * Has its own random state; does not change Fortran's intrinsic random state or affect other objects
 
