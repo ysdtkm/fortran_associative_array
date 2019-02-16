@@ -83,12 +83,12 @@ module dict_mod
     integer, intent(in) :: k
     type(node), pointer :: res
     integer :: get_kth_key
-    res => kth_node(t%root, k)
-    if (associated(res)) then
-      get_kth_key = res%key
-    else
+    if (k < 1 .or. k > my_count(t%root)) then
       print *, "get_kth_key failed"
       stop 2
+    else
+      res => kth_node(t%root, k)
+      get_kth_key = res%key
     end if
   end function get_kth_key
 
