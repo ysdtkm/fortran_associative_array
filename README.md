@@ -30,7 +30,7 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
 
 ## Usage
 * See `sample.f90` for sample usage
-* Edit `dtypes.h` for using for another data types
+* Edit `dtypes.h` if using another data types
     * For string key (arbitrary length), `keytype1` should be `character(:),allocatable` and `keytype2` should be `character(*)`
     * For other key types, `keytype1` and `keytype2` are the same
 
