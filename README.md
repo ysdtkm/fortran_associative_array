@@ -20,7 +20,7 @@ A scalable associative array, known as "hash table" or "dictionary" data types f
   |Operation                  |Cost                     |Note                                          |
   |----                       |----                     |----                                          |
   |Merge/split                |O(log n)                 |Destructive                                   |
-  |(lower\|upper)\_bound      |O(log n)                 |                                              |
+  |lower_bound/upper_bound    |O(log n)                 |                                              |
   |Range search               |O(log n + elements found)|                                              |
   |Deep copy                  |O(n)                     |Preorder DFS                                  |
   |Conversion to sorted array |O(n)                     |`show` subroutine is similar                  |
