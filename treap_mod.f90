@@ -49,7 +49,7 @@ module treap_mod
     type(treap), intent(in) :: t
     keytype2, intent(in) :: key
     logical :: find
-    find = exists(t%root, key)
+    find = associated(exists(t%root, key))
   end function find
 
   subroutine add(t, key)
@@ -201,15 +201,15 @@ module treap_mod
     implicit none
     type(node), pointer, intent(in) :: root
     keytype2, intent(in) :: key
-    logical :: res
+    type(node), pointer :: res
     if (.not. associated(root)) then
-      res = .false.
+      res => null()
     else if (root%key == key) then
-      res = .true.
+      res => root
     else if (key < root%key) then
-      res = exists(root%left, key)
+      res => exists(root%left, key)
     else
-      res = exists(root%right, key)
+      res => exists(root%right, key)
     end if
   end function exists
 
