@@ -10,7 +10,8 @@ A scalable associative array, known as "hash table" or "dictionary" data types f
   |----                       |----     |----                                          |
   |Insertion/assignment       |O(log n) |`insert_or_assign` subroutine                 |
   |Deletion                   |O(log n) |`remove` subroutine                           |
-  |Existence/lookup           |O(log n) |`exists` and `get_val` functions              |
+  |Existence of key           |O(log n) |`exists` function                             |
+  |Lookup                     |O(log n) |`get_val` function (error if not exist)       |
   |Max/min/k-th element       |O(log n) |`get_kth_key` function                        |
   |Count                      |O(1)     |`get_size` function                           |
   |Retrieve sorted array      |O(n)     |`get_keys_vals` subroutine                    |
