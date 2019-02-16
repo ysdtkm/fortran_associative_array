@@ -8,10 +8,10 @@
     
       |Operation|Cost|Note|
       |----|----|----|
-      |Insertion|O(log n)| |
-      |Deletion|O(log n)| |
-      |Search|O(log n)| |
-      |Max/min/k-th element|O(log n)|Not implemented|
+      |Insertion|O(log n)|`add` subroutine|
+      |Deletion|O(log n)|`remove` subroutine|
+      |Search|O(log n)|`find` function|
+      |Max/min/k-th element|O(log n)|`get_kth_key` function|
       |Merge/split|O(log n)|Not implemented; destructive|
       |Obtain size|O(1)| |
       |Deep copy|O(n)|Not implemented; preorder DFS|
@@ -28,11 +28,6 @@ See `sample.f90` and `Makefile` for sample usage
 * Better key handling (insertion already exist, search not found, etc.)
 * Ordered derived type as a key
     * https://software.intel.com/en-us/forums/intel-fortran-compiler-for-linux-and-mac-os-x/topic/595015
-* `exists` should return pointer to the node found
-
-## Tested with
-* https://arc033.contest.atcoder.jp/submissions/4270463
-* Valgrind for memory leak
 
 ## References
 * Treap https://en.wikipedia.org/wiki/Treap
