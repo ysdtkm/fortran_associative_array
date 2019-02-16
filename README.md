@@ -5,7 +5,7 @@
 ## Specifications
 * An associative array for fortran, which enables fast insertion, deletion, and search
     * Roughly corresponds to `std::set` and `std::map` of C++ standard template library (STL)
-    * Operations allowed by the data structure
+    * Operations already implemented
     
       |Operation                  |Cost     |Note                                          |
       |----                       |----     |----                                          |
