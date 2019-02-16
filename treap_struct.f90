@@ -1,6 +1,7 @@
 #include <dtypes.h>
 module treap_struct
-  ! Low level data structure and operations of treap
+  ! Low level data structure and operations of treap.
+  ! This allows multiple nodes with a same key.
 
   implicit none
 
@@ -170,14 +171,19 @@ module treap_struct
     nullify(root)
   end subroutine delete_all
 
-  recursive subroutine inorder(root)
+  recursive subroutine inorder(root, keys, vals, known)  ! ttk known
     implicit none
     type(node), pointer, intent(in) :: root
+    keytype2, intent(inout) :: keys(:)
+    valtype, intent(inout) :: vals(:)
+    integer, intent(inout) :: known
     if (.not. associated(root)) return
 
-    call inorder(root%left)
-    print *, "key:", root%key, "val:", root%val, ", pri:", root%pri, ", size:", root%cnt
-    call inorder(root%right)
+    call inorder(root%left, keys, vals, known)
+    known = known + 1
+    keys(known) = root%key
+    vals(known) = root%val
+    call inorder(root%right, keys, vals, known)
   end subroutine inorder
 end module treap_struct
 

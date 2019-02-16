@@ -92,10 +92,15 @@ module dict_mod
     end if
   end function get_kth_key
 
-  subroutine show(t)
+  subroutine show(t, keys, vals, n)  ! ttk rename
     implicit none
     type(dict), intent(in) :: t
-    call inorder(t%root)
+    integer, intent(in) :: n
+    integer :: counter
+    keytype2 :: keys(n)
+    valtype :: vals(n)
+    counter = 0
+    call inorder(t%root, keys, vals, counter)  ! ttk rename
   end subroutine show
 
   function get_size(t)

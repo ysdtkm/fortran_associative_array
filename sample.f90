@@ -3,11 +3,13 @@ program main
   use dict_mod, only: dict, insert_or_assign, get_val, remove, show, get_size, exists
   implicit none
 
-  integer, parameter :: n = 10000
+  integer, parameter :: n = 100
   type(dict) :: t
-  integer :: i, a(n), seed(100)
+  integer :: i, m, a(n), seed(100)
   real(8) :: r
   valtype :: b
+  keytype2, allocatable :: keys(:)
+  valtype, allocatable :: vals(:)
 
   seed(:) = 0
   call random_seed(put=seed)
@@ -21,7 +23,12 @@ program main
     call insert_or_assign(t, a(i), float(a(i)))
   end do
 
-  print *, get_size(t), "unique elements out of ", n
+  m = get_size(t)
+  print *, m, "unique elements out of ", n
+  allocate(keys(m), vals(m))
+  call show(t, keys, vals, m)
+  write (*, "(10i5)") keys
+  deallocate(keys, vals)
 
   do i = 1, n
     b = get_val(t, a(i))
@@ -34,6 +41,5 @@ program main
     end if
   end do
 
-  call show(t)
 end program main
 
