@@ -1,6 +1,6 @@
 # Fortran associative array [![Build Status](https://travis-ci.org/ysdtkm/fortran_associative_array.svg?branch=master)](https://travis-ci.org/ysdtkm/fortran_associative_array)
 * Associative array, known as "hash table" or "dictionary" data types
-* Implemented with treap and scalable
+* Scalable because it is implemented with treap (randomized binary search tree)
 
 ## Specifications
 * An associative array for fortran, which enables fast insertion, deletion, and search
