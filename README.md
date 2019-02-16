@@ -30,12 +30,8 @@
 ## Usage
 * See `sample.f90` and `Makefile` for sample usage
 * Edit `dtypes.h` for using for another data types
-    * For arbitrary length string key, `keytype1` should be `character(:),allocatable` and `keytype2` should be `character(*)`
+    * For string key (arbitrary length), `keytype1` should be `character(:),allocatable` and `keytype2` should be `character(*)`
     * For other key types, `keytype1` and `keytype2` are the same
-
-## Todo
-* Ordered derived type as a key
-    * https://software.intel.com/en-us/forums/intel-fortran-compiler-for-linux-and-mac-os-x/topic/595015
 
 ## References
 * Treap https://en.wikipedia.org/wiki/Treap
