@@ -6,13 +6,14 @@ program get_kth
   integer, parameter :: n = 10000
   type(treap) :: t
   integer :: i
+  real(4), parameter :: eps = 1e-6
 
   do i = 1, n
-    call add(t, i)
+    call add(t, i, float(i))
   end do
 
   do i = 1, n
-    if (get_kth_key(t, i) /= i) stop 2
+    if (abs(find(t, get_kth_key(t, i)) - i) > eps) stop 2
   end do
 end program get_kth
 
