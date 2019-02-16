@@ -12,13 +12,18 @@
       |Insertion                  |O(log n) |`add` subroutine                              |
       |Deletion                   |O(log n) |`remove` subroutine                           |
       |Search                     |O(log n) |`find` function                               |
-      |Assign                     |O(log n) |Not implemented                               |
       |Max/min/k-th element       |O(log n) |`get_kth_key` function                        |
-      |Merge/split                |O(log n) |Not implemented; destructive                  |
       |Obtain size                |O(1)     |`get_size` function                           |
-      |(lower\|upper)\_bound      |O(log n) |Not implemented                               |
-      |Deep copy                  |O(n)     |Not implemented; preorder DFS                 |
-      |Conversion to sorted array |O(n)     |Not implemented; `show` subroutine is similar |
+
+    * Other operations allowed by the data structure (not implemented)
+    
+      |Operation                  |Cost     |Note                                          |
+      |----                       |----     |----                                          |
+      |Assign                     |O(log n) |                                              |
+      |Merge/split                |O(log n) |Destructive                                   |
+      |(lower\|upper)\_bound      |O(log n) |                                              |
+      |Deep copy                  |O(n)     |Preorder DFS                                  |
+      |Conversion to sorted array |O(n)     |`show` subroutine is similar                  |
 
 * Has its own random state; does not change Fortran's intrinsic random state or affect other objects
 
