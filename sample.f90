@@ -10,8 +10,8 @@ program sample
   call insert_or_assign(ages, "Carol", 47)
   call insert_or_assign(ages, "Alice", 35)  ! Updated
 
-  print *, "Alice is", get_val(ages, "Alice"), "years old"
-  print *, "Do we know Dave's age?", exists(ages, "Dave")
+  print *, "Alice is", get_val(ages, "Alice"), "years old"  ! 35
+  print *, "Do we know Dave's age?", exists(ages, "Dave")   ! False
 
   call remove(ages, "Bob")
 
