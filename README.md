@@ -1,5 +1,5 @@
 # Fortran associative array (a.k.a. hash table or dictionary)
-https://travis-ci.org/ysdtkm/fortran_associative_array.svg?branch=master
+[![Build Status](https://travis-ci.org/ysdtkm/fortran_associative_array.svg?branch=master)](https://travis-ci.org/ysdtkm/fortran_associative_array)
 * Implemented with treap, a clever randomized binary search tree (technically, it's not a hash table)
 
 ## Specifications
