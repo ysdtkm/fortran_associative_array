@@ -31,9 +31,6 @@
 See `sample.f90` and `Makefile` for sample usage
 
 ## Todo
-* Second argument (i.e., value of the dictionary)
-    * Currently it is just implemented as a multiset rather than a dictionary
-* Better key handling (insertion already exist, search not found, etc.)
 * Ordered derived type as a key
     * https://software.intel.com/en-us/forums/intel-fortran-compiler-for-linux-and-mac-os-x/topic/595015
 
