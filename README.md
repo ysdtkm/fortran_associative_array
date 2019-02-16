@@ -17,7 +17,7 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
   |Reference                  |O(log n) |Function `get_val` (value type)   |Error if not exist     |
   |Get max/min/k-th key       |O(log n) |Function `get_kth_key` (key type) |Error if out of bounds; 1-based |
   |Count                      |O(1)     |Function `get_size` (integer)     |                       |
-  |Retrieve sorted array      |O(n)     |Subroutine `get_keys_vals`        |                       |
+  |Retrieve sorted array      |O(n)     |Subroutine `get_keys_vals`        |Not for arbitrary length keys|
   |Clear                      |O(n)     |Implicitly called as a destructor |                       |
 
 * Other operations allowed by the data structure (not implemented)
