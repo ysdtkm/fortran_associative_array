@@ -82,7 +82,7 @@ module dict_mod
     type(dict), intent(in) :: t
     integer, intent(in) :: k
     type(node), pointer :: res
-    integer :: get_kth_key
+    keytype1 :: get_kth_key
     if (k < 1 .or. k > my_count(t%root)) then
       print *, "get_kth_key failed"
       stop 2

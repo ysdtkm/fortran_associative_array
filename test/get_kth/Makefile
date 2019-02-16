@@ -10,7 +10,7 @@ ifeq ($(DEBUG),yes)
 else
   FFLAGS := -cpp -Ofast -march=native -fbacktrace -fdump-core
 endif
-INCLUDES = -I../../
+INCLUDES = -I.
 
 $(TARGET): get_kth.o dict_mod.o treap_struct.o
 	$(FC) $(INCLUDES) $(FFLAGS) $^ -o $@

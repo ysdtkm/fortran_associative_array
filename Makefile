@@ -20,8 +20,9 @@ $(TARGET): sample.o dict_mod.o treap_struct.o
 %.mod: %.o %.f90
 	@:
 
-sample.o: dict_mod.mod
-dict_mod.o: treap_struct.mod
+sample.o: dict_mod.mod dtypes.h
+dict_mod.o: treap_struct.mod dtypes.h
+treap_struct.o: dtypes.h
 
 clean:
 	rm -rf *.o *.mod *.gch *.log $(TARGET) core.*
