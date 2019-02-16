@@ -9,12 +9,14 @@
     
       |Operation|Cost|Note|
       |----|----|----|
-      |Insertion|O(log n)|`add` subroutine|
-      |Deletion|O(log n)|`remove` subroutine|
+      |Insertion `std::map.insert`|O(log n)|`add` subroutine|
+      |Deletion `std::map.erase`|O(log n)|`remove` subroutine|
       |Search|O(log n)|`find` function|
+      |Assign `std::map.assign`|O(log n)|Not implemented|
       |Max/min/k-th element|O(log n)|`get_kth_key` function|
       |Merge/split|O(log n)|Not implemented; destructive|
       |Obtain size|O(1)|`get_size` function|
+      |(lower|upper)\_bound|O(log n)|Not implemented|
       |Deep copy|O(n)|Not implemented; preorder DFS|
       |Conversion to sorted array|O(n)|Not implemented; `show` subroutine is similar|
 
