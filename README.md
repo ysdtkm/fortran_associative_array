@@ -5,7 +5,7 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
 * Internal data structure is treap (randomized binary search tree)
 * Roughly corresponds to `std::map` (C++) or `dict` (Python)
     * A **key** can be `characters` (either fixed or arbitrary length), an `integer`, or a `real`
-    * A **value** can be any fortran intrinsic data type. A **copy** of the value is stored in the `dict` object
+    * A **value** can be any fortran intrinsic data type (with fixed length or kind). A **copy** of the value is stored in the `dict` object
     * Does not affect Fortran's intrinsic random state
 * Implemented operations
 
