@@ -1,19 +1,19 @@
 #include <dtypes.h>
-module treap_mod  ! ttk: rename to dict_mod
-  ! High level wrapper for randomized treap
+module dict_mod
+  ! High level wrapper of dictionary data structure
 
-  use treap_struct, only: node, my_count, insert, erase, exists, kth_node, delete_all, inorder
+  use treap_struct, only: node, my_count, insert, erase, find_node, kth_node, delete_all, inorder
   implicit none
 
   private
-  public :: treap, find, add, key_exists, remove, show, get_size, get_kth_key
+  public :: dict, get_val, insert_or_assign, exists, remove, show, get_size, get_kth_key
 
-  type treap  ! ttk: rename to dict
+  type dict  ! ttk: rename to dict
     type(node), pointer :: root => null()
     integer :: randstate = 1231767121
     contains
     final :: destruct_treap
-  end type treap
+  end type dict
 
   contains
 
@@ -32,54 +32,54 @@ module treap_mod  ! ttk: rename to dict_mod
     xorshift32 = ieor(xorshift32, ishft(xorshift32, 15))
   end function xorshift32
 
-  function find(t, key)  ! ttk: rename to get_val
+  function get_val(t, key)
     implicit none
-    type(treap), intent(in) :: t
+    type(dict), intent(in) :: t
     keytype2, intent(in) :: key
     type(node), pointer :: nd
-    valtype :: find
-    nd => exists(t%root, key)
+    valtype :: get_val
+    nd => find_node(t%root, key)
     if (.not. associated(nd)) then
       stop 105
     end if
-    find = nd%val
-  end function find
+    get_val = nd%val
+  end function get_val
 
-  function key_exists(t, key)
+  function exists(t, key)
     implicit none
-    type(treap), intent(in) :: t
+    type(dict), intent(in) :: t
     keytype2, intent(in) :: key
     type(node), pointer :: nd
-    logical :: key_exists
-    nd => exists(t%root, key)
-    key_exists = (associated(nd))
-  end function key_exists
+    logical :: exists
+    nd => find_node(t%root, key)
+    exists = (associated(nd))
+  end function exists
 
-  subroutine add(t, key, val)  ! ttk: rename to insert_or_assign
+  subroutine insert_or_assign(t, key, val)
     implicit none
-    type(treap), intent(inout) :: t
+    type(dict), intent(inout) :: t
     keytype2, intent(in) :: key
     valtype, intent(in) :: val
     type(node), pointer :: nd
-    nd => exists(t%root, key)
+    nd => find_node(t%root, key)
     if (associated(nd)) then
       nd%val = val
     else
       t%root => insert(t%root, key, val, t%randstate)
       t%randstate = xorshift32(t%randstate)
     end if
-  end subroutine add
+  end subroutine insert_or_assign
 
   subroutine remove(t, key)
     implicit none
-    type(treap), intent(inout) :: t
+    type(dict), intent(inout) :: t
     keytype2, intent(in) :: key
     t%root => erase(t%root, key)
   end subroutine remove
 
   function get_kth_key(t, k)
     implicit none
-    type(treap), intent(in) :: t
+    type(dict), intent(in) :: t
     integer, intent(in) :: k
     type(node), pointer :: res
     integer :: get_kth_key
@@ -94,21 +94,21 @@ module treap_mod  ! ttk: rename to dict_mod
 
   subroutine show(t)
     implicit none
-    type(treap), intent(in) :: t
+    type(dict), intent(in) :: t
     call inorder(t%root)
   end subroutine show
 
   function get_size(t)
     implicit none
-    type(treap), intent(in) :: t
+    type(dict), intent(in) :: t
     integer :: get_size
     get_size = my_count(t%root)
   end function get_size
 
   subroutine destruct_treap(t)
     implicit none
-    type(treap), intent(inout) :: t
+    type(dict), intent(inout) :: t
     call delete_all(t%root)
   end subroutine destruct_treap
 
-end module treap_mod
+end module dict_mod

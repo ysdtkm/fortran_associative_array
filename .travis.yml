@@ -6,6 +6,7 @@ install:
   - sudo apt-get install gfortran valgrind
 
 script:
+  - make && ./a.out
   - cd ${TRAVIS_BUILD_DIR}/test/add_erase_random && make && ./a.out
   - valgrind --leak-check=full --error-exitcode=87 ./a.out
   - cd ${TRAVIS_BUILD_DIR}/test/get_kth && make && ./a.out

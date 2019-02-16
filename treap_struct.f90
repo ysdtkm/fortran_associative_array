@@ -127,7 +127,7 @@ module treap_struct
     if (associated(res)) call update(res)
   end function erase
 
-  recursive function exists(root, key) result(res)  ! ttk: rename to find_node
+  recursive function find_node(root, key) result(res)
     implicit none
     type(node), pointer, intent(in) :: root
     keytype2, intent(in) :: key
@@ -137,11 +137,11 @@ module treap_struct
     else if (root%key == key) then
       res => root
     else if (key < root%key) then
-      res => exists(root%left, key)
+      res => find_node(root%left, key)
     else
-      res => exists(root%right, key)
+      res => find_node(root%right, key)
     end if
-  end function exists
+  end function find_node
 
   recursive function kth_node(root, k) result(res)
     implicit none
