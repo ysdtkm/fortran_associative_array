@@ -183,7 +183,7 @@ module treap_mod
         else
           res => root%left
         end if
-        ! ttk deallocate(tmp)
+        deallocate(tmp)
       else
         if (root%left%pri < root%right%pri) then
           res => rotate_ccw(root)
