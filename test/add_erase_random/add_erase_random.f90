@@ -1,10 +1,4 @@
-#if defined STRING
-#  define dat c
-#elif defined INT
-#  define dat a
-#endif
-#define valtype real(4)
-
+#include <dtypes.h>
 program add_erase_random
   use treap_mod, only: treap, add, find, remove, show, get_size
   implicit none
@@ -13,7 +7,6 @@ program add_erase_random
   type(treap) :: t
   integer :: i, a(n), seed(100)
   real(8) :: r
-  character(20) :: c(n)
   valtype :: b
 
   seed(:) = 0
@@ -22,27 +15,26 @@ program add_erase_random
   do i = 1, n
     call random_number(r)
     a(i) = floor(r * n)
-    write(c(i), "(i10)") a(i)
   end do
 
   do i = 1, n
-    call add(t, dat(i), float(dat(i)))
+    call add(t, a(i), float(a(i)))
   end do
 
   if (get_size(t) /= n) stop 1
 
   do i = 1, n
-    b = find(t, dat(i))
+    b = find(t, a(i))
   end do
 
   do i = 1, n
-    call remove(t, dat(i))
+    call remove(t, a(i))
   end do
 
   if (get_size(t) /= 0) stop 4
 
   do i = 1, n
-    call add(t, dat(i), float(dat(i)))
+    call add(t, a(i), float(a(i)))
   end do
 end program add_erase_random
 

@@ -10,13 +10,13 @@ ifeq ($(DEBUG),yes)
 else
   FFLAGS := -cpp -Ofast -march=native -fbacktrace -fdump-core
 endif
-MACROS = -DINT  # STRING or INT
+INCLUDES = -I../../
 
 $(TARGET): add_erase_random.o treap_mod.o
-	$(FC) $(MACROS) $(FFLAGS) $^ -o $@
+	$(FC) $(INCLUDES) $(FFLAGS) $^ -o $@
 
 %.o: %.f90
-	$(FC) $(MACROS) -c $(FFLAGS) $<
+	$(FC) $(INCLUDES) -c $(FFLAGS) $<
 
 %.mod: %.o %.f90
 	@:
@@ -24,7 +24,7 @@ $(TARGET): add_erase_random.o treap_mod.o
 add_erase_random.o: treap_mod.mod
 
 clean:
-	rm -rf *.o *.mod *.log $(TARGET) core.*
+	rm -rf *.o *.cgh *.mod *.log $(TARGET) core.*
 
 .PHONY: clean
 

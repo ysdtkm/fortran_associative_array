@@ -20,7 +20,10 @@
 * Has its own random state; does not change Fortran's intrinsic random state or affect other objects
 
 ## Usage
-See `sample.f90` and `Makefile` for sample usage
+* See `sample.f90` and `Makefile` for sample usage
+* Edit `dtypes.h` for using for another data types
+    * For arbitrary length string key, `keytype1` should be `character(:),allocatable` and `keytype2` should be `character(*)`
+    * For other key types, `keytype1` and `keytype2` are the same
 
 ## Todo
 * Second argument (i.e., value of the dictionary)
