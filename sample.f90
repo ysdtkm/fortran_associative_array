@@ -4,10 +4,10 @@ program sample
 
   type(dict) :: ages  ! Initialized empty
 
-  call insert_or_assign(ages, "Alice", "28")
-  call insert_or_assign(ages, "Bob",   "13")
-  call insert_or_assign(ages, "Carol", "47")
-  call insert_or_assign(ages, "Alice", "35")  ! Updated
+  call insert_or_assign(ages, "Alice", 28)
+  call insert_or_assign(ages, "Bob",   13)
+  call insert_or_assign(ages, "Carol", 47)
+  call insert_or_assign(ages, "Alice", 35)  ! Updated
 
   print *, "Alice is", get_val(ages, "Alice"), "years old"  ! 35
   print *, "Do we know Dave's age?", exists(ages, "Dave")   ! False
