@@ -18,7 +18,6 @@ module dict_mod
   contains
 
   pure function xorshift32(i)
-    ! Todo: check if this implementation is correct also for signed integer
     implicit none
     integer(4), intent(in) :: i
     integer(4) :: xorshift32
