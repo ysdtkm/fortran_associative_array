@@ -1,4 +1,4 @@
-#define jmax 18
+#define jmax 20
 program speedtest
   use dict_mod, only: dict, insert_or_assign, get_val, remove, get_size, exists
   implicit none
@@ -18,6 +18,7 @@ program speedtest
 
   do b = 0, 1
     do j = 5, jmax
+      if (b == 0 .and. j > 17) cycle
       seed(:) = 0
       call random_seed(put=seed)
       n = 2 ** j
