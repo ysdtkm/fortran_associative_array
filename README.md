@@ -29,6 +29,10 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
   |Range search               |O(log n + elements found)|                                              |
   |Deep copy                  |O(n)                     |Preorder DFS                                  |
 
+* Speed comparison with `gfortran`/`g++`, without compiler optimization
+
+  <img src="test/speedtest/visual/out.png" width="50%">
+
 ## Usage
 * See `sample.f90` for sample usage
 * Edit `dtypes.h` if using another data types
