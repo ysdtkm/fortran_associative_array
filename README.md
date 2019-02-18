@@ -5,7 +5,7 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
 * Internal data structure is treap (randomized binary search tree)
 * Roughly corresponds to `std::map` (C++) or `dict` (Python)
     * A **key** can be `characters` (either fixed or arbitrary length), an `integer`, or a `real`
-    * A **value** can be any fortran intrinsic data type. A **copy** of the value is stored in the `dict` object
+    * A **value** can be any fortran intrinsic data type (with fixed length or kind). A *copy* of the value is stored in the `dict` object
     * Does not affect Fortran's intrinsic random state
 * Implemented operations
 
@@ -17,7 +17,7 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
   |Reference                  |O(log n) |Function `get_val` (value type)   |Error if not exist     |
   |Get max/min/k-th key       |O(log n) |Function `get_kth_key` (key type) |Error if out of bounds; 1-based |
   |Count                      |O(1)     |Function `get_size` (integer)     |                       |
-  |Retrieve sorted array      |O(n)     |Subroutine `get_keys_vals`        |                       |
+  |Retrieve sorted array      |O(n)     |Subroutine `get_keys_vals`        |Not for arbitrary length keys|
   |Clear                      |O(n)     |Implicitly called as a destructor |                       |
 
 * Other operations allowed by the data structure (not implemented)
