@@ -1,84 +1,82 @@
-#define jmax 18
+#define jmax 20
+#define ljmax 16
 program speedtest
   use dict_mod, only: dict, insert_or_assign, get_val, remove, get_size, exists
   implicit none
 
   type linear_set
     integer :: cnt = 0
-    integer :: keys(2 ** jmax)
-    real(4) :: vals(2 ** jmax)
+    integer :: keys(2 ** ljmax)
+    real(4) :: vals(2 ** ljmax)
   end type linear_set
 
-  integer :: b, j, seed(100)
+  integer :: b, j, seed(100), itr, dt, dummy, t_rate
   real(4) :: r
 
   seed(:) = 0
   call random_seed(put=seed)
+  call system_clock(dummy, t_rate)
 
   do b = 0, 1
     do j = 5, jmax
-      if (b == 0 .and. j > 16) cycle
+      if (b == 0 .and. j > ljmax) cycle
+      dt = 0
       if (b == 0) then
-        call test_linear(j, 2 ** (16 - j))
+        do itr = 1, (2 ** (ljmax - j))
+          dt = dt + test_linear(j)
+        end do
       else
-        call test_treap(j, 2 ** (20 - j))
+        do itr = 1, (2 ** (jmax - j))
+          dt = dt + test_treap(j)
+        end do
       end if
+      print *, j, dt / (dble(itr) * dble(t_rate) * 2 ** j)
     end do
   end do
 
   contains
 
-  subroutine test_treap(j, itr)
+  function test_treap(j)
     implicit none
-    integer, intent(in) :: j, itr
-    integer :: n, i, p, t1, t2, t_rate, tsum
+    integer, intent(in) :: j
+    integer :: n, i, t1, t2
     integer :: a(2 ** j)
+    integer :: test_treap
     type(dict) :: t
     n = 2 ** j
-    tsum = 0
-
-    do p = 1, itr
-      do i = 1, n
-        call random_number(r)
-        a(i) = floor(r * n)
-      end do
-
-      call system_clock(t1)
-      do i = 1, n
-        call insert_or_assign(t, a(i), float(a(i)))
-      end do
-      call system_clock(t2, t_rate)
-      tsum = tsum + (t2 - t1)
+    do i = 1, n
+      call random_number(r)
+      a(i) = floor(r * n)
     end do
 
-    print *, n, tsum / (dble(t_rate) * dble(n) * itr)
-  end subroutine test_treap
+    call system_clock(t1)
+    do i = 1, n
+      call insert_or_assign(t, a(i), float(a(i)))
+    end do
+    call system_clock(t2)
+    test_treap = t2 - t1
+  end function test_treap
 
-  subroutine test_linear(j, itr)
+  function test_linear(j)
     implicit none
-    integer, intent(in) :: j, itr
-    integer :: n, i, t1, t2, t_rate, tsum, p
+    integer, intent(in) :: j
+    integer :: n, i, t1, t2
     integer :: a(2 ** j)
     type(linear_set) :: ls
+    integer :: test_linear
     n = 2 ** j
-    tsum = 0
-
-    do p = 1, itr
-      do i = 1, n
-        call random_number(r)
-        a(i) = floor(r * n)
-      end do
-
-      call system_clock(t1)
-      do i = 1, n
-        call linear_insert_or_assign(ls, a(i), float(a(i)))
-      end do
-      call system_clock(t2, t_rate)
-      tsum = tsum + (t2 - t1)
+    do i = 1, n
+      call random_number(r)
+      a(i) = floor(r * n)
     end do
 
-    print *, n, tsum / (dble(t_rate) * dble(n) * itr)
-  end subroutine test_linear
+    call system_clock(t1)
+    do i = 1, n
+      call linear_insert_or_assign(ls, a(i), float(a(i)))
+    end do
+    call system_clock(t2)
+    test_linear = t2 - t1
+  end function test_linear
 
   subroutine linear_insert_or_assign(ls, key, val)
     implicit none
