@@ -1,4 +1,4 @@
-#define jmax 22
+#define jmax 20
 #define ljmax 16
 program speedtest
   use dict_mod, only: dict, insert_or_assign, get_val, remove, get_size, exists
@@ -20,18 +20,19 @@ program speedtest
   do b = 0, 1
     do j = 5, jmax
       if (b == 0 .and. j > ljmax) cycle
-      dt = 0
-      n = 2 ** j
       if (b == 0) then
         itrmax = 2 ** (ljmax - j)
       else
         itrmax = 2 ** (jmax - j)
       end if
+
+      dt = 0
+      n = 2 ** j
       do itr = 1, itrmax
         if (b == 0) then
-          dt = dt + test_linear(j)
+          dt = dt + test_linear(n)
         else
-          dt = dt + test_treap(j)
+          dt = dt + test_treap(n)
         end if
       end do
       print *, n, dt / (dble(itrmax) * dble(t_rate) * n)
@@ -40,14 +41,13 @@ program speedtest
 
   contains
 
-  function test_treap(j)
+  function test_treap(n)
     implicit none
-    integer, intent(in) :: j
-    integer :: n, i, t1, t2
-    integer :: a(2 ** j)
+    integer, intent(in) :: n
+    integer :: i, t1, t2
+    integer :: a(n)
     integer :: test_treap
     type(dict) :: t
-    n = 2 ** j
     do i = 1, n
       call random_number(r)
       a(i) = floor(r * n)
@@ -61,14 +61,13 @@ program speedtest
     test_treap = t2 - t1
   end function test_treap
 
-  function test_linear(j)
+  function test_linear(n)
     implicit none
-    integer, intent(in) :: j
-    integer :: n, i, t1, t2
-    integer :: a(2 ** j)
+    integer, intent(in) :: n
+    integer :: i, t1, t2
+    integer :: a(n)
     type(linear_set) :: ls
     integer :: test_linear
-    n = 2 ** j
     do i = 1, n
       call random_number(r)
       a(i) = floor(r * n)
