@@ -1,4 +1,4 @@
-#define jmax 20
+#define jmax 22
 #define ljmax 16
 program speedtest
   use dict_mod, only: dict, insert_or_assign, get_val, remove, get_size, exists
@@ -10,7 +10,7 @@ program speedtest
     real(4) :: vals(2 ** ljmax)
   end type linear_set
 
-  integer :: b, j, seed(100), itr, dt, dummy, t_rate
+  integer :: b, j, seed(100), itr, itrmax, dt, dummy, t_rate, n
   real(4) :: r
 
   seed(:) = 0
@@ -21,16 +21,20 @@ program speedtest
     do j = 5, jmax
       if (b == 0 .and. j > ljmax) cycle
       dt = 0
+      n = 2 ** j
       if (b == 0) then
-        do itr = 1, (2 ** (ljmax - j))
-          dt = dt + test_linear(j)
-        end do
+        itrmax = 2 ** (ljmax - j)
       else
-        do itr = 1, (2 ** (jmax - j))
-          dt = dt + test_treap(j)
-        end do
+        itrmax = 2 ** (jmax - j)
       end if
-      print *, j, dt / (dble(itr) * dble(t_rate) * 2 ** j)
+      do itr = 1, itrmax
+        if (b == 0) then
+          dt = dt + test_linear(j)
+        else
+          dt = dt + test_treap(j)
+        end if
+      end do
+      print *, n, dt / (dble(itrmax) * dble(t_rate) * n)
     end do
   end do
 
