@@ -50,24 +50,29 @@ program speedtest
     type(linear_set), intent(inout) :: ls
     integer, intent(in) :: key
     real(4), intent(in) :: val
+    integer :: k
 
-    if (linear_exists(ls, key)) return
+    k = linear_exists(ls, key)
 
-    ls%cnt = ls%cnt + 1
-    ls%keys(ls%cnt) = key
-    ls%vals(ls%cnt) = val
+    if (k > 0) then
+      ls%vals(k) = val
+    else
+      ls%cnt = ls%cnt + 1
+      ls%keys(ls%cnt) = key
+      ls%vals(ls%cnt) = val
+    end if
   end subroutine linear_insert_or_assign
 
   function linear_exists(ls, key)
     implicit none
     type(linear_set), intent(in) :: ls
     integer, intent(in) :: key
-    logical linear_exists
+    integer ::  linear_exists
     integer :: i
-    linear_exists = .false.
+    linear_exists = -1
     do i = 1, ls%cnt
       if (ls%keys(i) == key) then
-        linear_exists = .true.
+        linear_exists = i
         exit
       end if
     end do
