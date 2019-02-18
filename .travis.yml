@@ -12,4 +12,6 @@ script:
   - valgrind --leak-check=full --error-exitcode=87 ./a.out
   - cd ${TRAVIS_BUILD_DIR}/test/get_kth && make && ./a.out
   - valgrind --leak-check=full --error-exitcode=87 ./a.out
+  - cd ${TRAVIS_BUILD_DIR}/test/speedtest && make && ./a.out
+  - valgrind --leak-check=full --error-exitcode=87 ./a.out
 
