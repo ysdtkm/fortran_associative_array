@@ -12,13 +12,13 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
   |Operation                  |Cost     |Implementation                                                    |
   |----                       |----     |----                                                              |
   |Insertion/assignment       |O(log n) |Subroutine `insert_or_assign(dict, key, val)`                     |
-  |Deletion                   |O(log n) |Subroutine `remove(dict, key)`<br>Error if not exist              |
+  |Deletion                   |O(log n) |Subroutine `remove(dict, key)`<br>(Error if not exist)            |
   |Existence of a key         |O(log n) |Logical function `exists(dict, key)`                              |
-  |Reference                  |O(log n) |Valuetype function `get_val(dict, key)`<br>Error if not exist     |
-  |Get max/min/k-th key       |O(log n) |Keytype function `get_kth_key(dict, k)`<br>Error if out of bounds; 1-based |
-  |Count                      |O(1)     |Integer function `get_size(dict)`                                          |
-  |Retrieve sorted array      |O(n)     |Subroutine `get_keys_vals(dict, keys, vals, n)`<br>Not for arbitrary length keys|
-  |Clear                      |O(n)     |Implicitly called as a destructor                                               |
+  |Reference                  |O(log n) |Valuetype function `get_val(dict, key)`<br>(Error if not exist)   |
+  |Get max/min/k-th key       |O(log n) |Keytype function `get_kth_key(dict, k)`<br>(Error if out of bounds; 1-based)|
+  |Count                      |O(1)     |Integer function `get_size(dict)`                                           |
+  |Retrieve sorted array      |O(n)     |Subroutine `get_keys_vals(dict, keys, vals, n)`<br>(Not for arbitrary length keys)|
+  |Clear                      |O(n)     |Implicitly called as a destructor                                           |
 
 * Other operations allowed by the data structure (not implemented)
 
