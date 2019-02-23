@@ -1,5 +1,5 @@
 #define keytype integer(4)
-#define valtype integer(4)
+#define valtype real(4)
 
 program hash_table  ! ttk module
   implicit none
@@ -26,24 +26,45 @@ program hash_table  ! ttk module
 
   subroutine test()
     implicit none
-    type(dictionary) :: di
-    integer :: i
-    keytype :: keys(10)
-    valtype :: vals(10)
-    do i = 1, 10
-      call insert_or_assign(di, i, i)
-    end do
-    do i = 1, 10
-      if (get_val(di, i) /= i) stop 12
+    integer, parameter :: jmax = 20
+    integer :: j, seed(100), itr, itrmax, dt, dummy, t_rate, n
+
+    seed(:) = 0
+    call random_seed(put=seed)
+    call system_clock(dummy, t_rate)
+
+    do j = 5, jmax
+      itrmax = 2 ** (jmax - j)
+      dt = 0
+      n = 2 ** j
+      do itr = 1, itrmax
+        dt = dt + test_hash_table(n)
+      end do
+      print *, n, dt / (dble(itrmax) * dble(t_rate) * n)
     end do
 
-    call get_keys_vals(di, keys, vals)
-    print *, keys
-    print *, vals
-    do i = 1, 10
-      call delete(di, i)
-    end do
   end subroutine test
+
+  function test_hash_table(n)
+    implicit none
+    integer, intent(in) :: n
+    integer :: i, t1, t2
+    integer :: a(n)
+    integer :: test_hash_table
+    real(4) :: r
+    type(dictionary) :: t
+    do i = 1, n
+      call random_number(r)
+      a(i) = floor(r * n)
+    end do
+
+    call system_clock(t1)
+    do i = 1, n
+      call insert_or_assign(t, a(i), float(a(i)))
+    end do
+    call system_clock(t2)
+    test_hash_table = t2 - t1
+  end function test_hash_table
 
   pure function fnv_1a_32_int(x)
     implicit none
