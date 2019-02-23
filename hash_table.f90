@@ -28,10 +28,18 @@ program hash_table  ! ttk module
     implicit none
     type(dictionary) :: di
     integer :: i
-    do i = 1, 100
+    keytype :: keys(10)
+    valtype :: vals(10)
+    do i = 1, 10
       call insert_or_assign(di, i, i)
     end do
-    print *, di%flags
+    do i = 1, 10
+      if (get_val(di, i) /= i) stop 12
+    end do
+
+    call get_keys_vals(di, keys, vals)
+    print *, keys
+    print *, vals
   end subroutine test
 
   pure function fnv_1a_32_int(x)
@@ -46,7 +54,7 @@ program hash_table  ! ttk module
     end do
   end function fnv_1a_32_int
 
-  function fnv_1a_32(s)
+  pure function fnv_1a_32(s)
     implicit none
     character(*), intent(in) :: s
     integer(4) :: fnv_1a_32, i
@@ -67,12 +75,11 @@ program hash_table  ! ttk module
     if ((di%num_elem + di%num_del) * 2 >= di%alloc_size) then
       call rehash(di)
     end if
-    call pure_insert(di, key, val)
+    call pure_insert_or_assign(di, key, val)
   end subroutine insert_or_assign
 
-  subroutine pure_insert(di, key, val)
+  subroutine pure_insert_or_assign(di, key, val)
     ! Dictionary is assumed to have enough space
-    ! ttk 重複処理
     implicit none
     type(dictionary), intent(inout) :: di
     keytype, intent(in) :: key
@@ -89,12 +96,16 @@ program hash_table  ! ttk module
         di%num_elem = di%num_elem + 1
         overflow = .false.
         exit
+      else if (di%flags(addr) == used .and. di%keys(addr) == key) then
+        di%vals(addr) = val
+        overflow = .false.
+        exit
       else
         addr = increment(di%alloc_size, addr)
       end if
     end do
     if (overflow) stop 1
-  end subroutine pure_insert
+  end subroutine pure_insert_or_assign
 
   pure function get_initial_addr(n, key)
     implicit none
@@ -130,7 +141,7 @@ program hash_table  ! ttk module
       call pure_alloc(di, 2 * n)
       do i = 1, n
         if (old_flags(i) == used) then
-          call pure_insert(di, old_keys(i), old_vals(i))
+          call pure_insert_or_assign(di, old_keys(i), old_vals(i))
         end if
       end do
       deallocate(old_flags, old_keys, old_vals)
@@ -148,10 +159,89 @@ program hash_table  ! ttk module
     di%num_del = 0
   end subroutine pure_alloc
 
-  ! exists
-  ! get_val
-  ! delete
-  ! get_size
-  ! get_keys_vals
+  function exists(di, key)
+    implicit none
+    type(dictionary), intent(in) :: di
+    keytype, intent(in) :: key
+    integer(4) :: addr, i
+    logical :: exists
+    exists = .false.
+    addr = get_initial_addr(di%alloc_size, key)
+    do i = 1, di%alloc_size
+      if (di%flags(addr) == unused) then
+        exit
+      else if (di%flags(addr) == used .and. di%keys(addr) == key) then
+        exists = .true.
+        exit
+      else
+        addr = increment(di%alloc_size, addr)
+      end if
+    end do
+  end function exists
 
+  function get_val(di, key)
+    implicit none
+    type(dictionary), intent(in) :: di
+    keytype, intent(in) :: key
+    valtype :: get_val
+    integer(4) :: addr, i
+    addr = get_initial_addr(di%alloc_size, key)
+    do i = 1, di%alloc_size
+      if (di%flags(addr) == unused) then
+        print *, "Error: query with nonexistent key"
+        stop 3
+      else if (di%flags(addr) == used .and. di%keys(addr) == key) then
+        get_val = di%vals(addr)
+        exit
+      else
+        addr = increment(di%alloc_size, addr)
+      end if
+    end do
+  end function get_val
+
+  subroutine delete(di, key)
+    implicit none
+    type(dictionary), intent(inout) :: di
+    keytype, intent(in) :: key
+    integer(4) :: addr, i
+    addr = get_initial_addr(di%alloc_size, key)
+    do i = 1, di%alloc_size
+      if (di%flags(addr) == unused) then
+        print *, "Error: nonexistent key cannot be deleted"
+        stop 4
+      else if (di%flags(addr) == used .and. di%keys(addr) == key) then
+        di%flags(addr) = deleted
+        exit
+      else
+        addr = increment(di%alloc_size, addr)
+      end if
+    end do
+  end subroutine delete
+
+  pure function get_size(di)
+    implicit none
+    type(dictionary), intent(in) :: di
+    integer :: get_size
+    get_size = di%num_elem
+  end function get_size
+
+  subroutine get_keys_vals(di, keys, vals)
+    implicit none
+    type(dictionary), intent(in) :: di
+    keytype, intent(out) :: keys(di%num_elem)
+    valtype, intent(out) :: vals(di%num_elem)
+    integer(4) :: cnt, i
+    cnt = 0
+    do i = 1, di%alloc_size
+      if (di%flags(i) == used) then
+        cnt = cnt + 1
+        keys(cnt) = di%keys(i)
+        vals(cnt) = di%vals(i)
+      end if
+    end do
+    if (cnt /= di%num_elem) then
+      print *, "Error: size mismatch"
+      stop 5
+    end if
+  end subroutine get_keys_vals
 end program hash_table
