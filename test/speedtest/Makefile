@@ -1,6 +1,6 @@
 TARGET = a.out
 FC = gfortran
-DEBUG = yes
+DEBUG = no
 vpath %.f90 ../../
 
 ifeq ($(DEBUG),yes)

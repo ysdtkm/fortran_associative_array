@@ -90,6 +90,20 @@ program hash_table  ! ttk module
     end do
   end function fnv_1a_32
 
+  pure function xorshift32(i)
+    implicit none
+    integer(4), intent(in) :: i
+    integer(4) :: xorshift32
+    if (i == 0) then
+      xorshift32 = 1231767121
+    else
+      xorshift32 = i
+    end if
+    xorshift32 = ieor(xorshift32, ishft(xorshift32, 13))
+    xorshift32 = ieor(xorshift32, ishft(xorshift32, -17))
+    xorshift32 = ieor(xorshift32, ishft(xorshift32, 15))
+  end function xorshift32
+
   subroutine insert_or_assign(di, key, val)
     implicit none
     type(dictionary), intent(inout) :: di
@@ -136,7 +150,8 @@ program hash_table  ! ttk module
     keytype, intent(in) :: key
     integer(4), intent(in) :: n
     integer(4) :: get_initial_addr
-    get_initial_addr = fnv_1a_32_int(key)
+    get_initial_addr = xorshift32(key)
+    ! get_initial_addr = fnv_1a_32_int(key)
     get_initial_addr = iand(get_initial_addr, n - 1) + 1  ! 1-based
   end function get_initial_addr
 

@@ -7,7 +7,7 @@ ifeq ($(DEBUG),yes)
             -fbacktrace -fdump-core -ffpe-trap=invalid,zero,overflow -fimplicit-none \
             -finit-real=snan -finit-integer=-858993460
 else
-  FFLAGS := -pg -cpp -Ofast -march=native -fbacktrace -fdump-core
+  FFLAGS := -cpp -Ofast -march=native -fbacktrace -fdump-core
 endif
 INCLUDE := -I.
 
