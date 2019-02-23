@@ -33,7 +33,7 @@ program hash_table  ! ttk module
     call random_seed(put=seed)
     call system_clock(dummy, t_rate)
 
-    do j = 5, jmax
+    do j = 1, jmax
       itrmax = 2 ** (jmax - j)
       dt = 0
       n = 2 ** j
@@ -65,51 +65,17 @@ program hash_table  ! ttk module
     test_hash_table = t2 - t1
   end function test_hash_table
 
-  pure function fnv_1a_32_int(x)
+  pure function fnv_1a_32(c)
     implicit none
-    integer(4), intent(in) :: x
-    integer(4) :: fnv_1a_32_int, i
-    integer(1) :: c(4)
-    fnv_1a_32_int = fnv_offset_basis_32
-    c = transfer(x, c)
-    do i = 1, 4
-      fnv_1a_32_int = fnv_prime_32 * ieor(fnv_1a_32_int, c(i))! ttk
-    end do
-  end function fnv_1a_32_int
-
-  pure function fnv_1a_32(s)
-    implicit none
-    character(*), intent(in) :: s
+    integer(4), parameter :: fnv_offset_basis_32 = -2128831035  ! 0x811c9dc5
+    integer(4), parameter :: fnv_prime_32 = 16777619
     integer(4) :: fnv_1a_32, i
-    integer(1) :: c(len(s))
+    integer(1), intent(in) :: c(:)
     fnv_1a_32 = fnv_offset_basis_32
-    c = transfer(s, c, len(s))
-    do i = 1, len(s)
-      fnv_1a_32 = fnv_prime_32 * ieor(fnv_1a_32, int(c(i), kind=4))
+    do i = 1, size(c)
+      fnv_1a_32 = fnv_prime_32 * ieor(fnv_1a_32, c(i))
     end do
   end function fnv_1a_32
-
-  pure function murmur3_32(i) result(h)
-    implicit none
-    integer(4), intent(in) :: i
-    integer(4) :: h, k
-    integer(4), parameter :: c1 = -862048943, c2 = 461845907, n = -430675100
-    integer(4), parameter :: c3 = -2048144789, c4 = -1028477387
-    h = 12345  ! ttk seed
-    k = i
-    k = k * c1
-    k = ior(ishft(k, 15), ishft(k, -17))
-    k = k * c2
-    h = ieor(h, k)
-    h = ior(ishft(h, 13), ishft(h, -19))
-    h = h * 5 + n
-    h = ieor(h, 4)
-    h = ieor(h, ishft(h, -16))
-    h = h * c3
-    h = ieor(h, ishft(h, -13))
-    h = h * c4
-    h = ieor(h, ishft(h, -16))
-  end function murmur3_32
 
   subroutine insert_or_assign(di, key, val)
     implicit none
@@ -157,7 +123,9 @@ program hash_table  ! ttk module
     keytype, intent(in) :: key
     integer(4), intent(in) :: n
     integer(4) :: get_initial_addr
-    get_initial_addr = fnv_1a_32_int(key)  ! ttk
+    integer(1) :: c(4)
+    c = transfer(key, c)
+    get_initial_addr = fnv_1a_32(c)
     get_initial_addr = iand(get_initial_addr, n - 1) + 1  ! 1-based
   end function get_initial_addr
 

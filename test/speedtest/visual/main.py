@@ -58,6 +58,44 @@ def get_map():
         1048576 1.44749e-06'''
     return res
 
+def get_hash_table():
+    res = """32   1.4209747314453124E-007
+          64   1.8978118896484376E-007
+         128   2.0599365234375000E-007
+         256   2.2220611572265626E-007
+         512   2.2602081298828124E-007
+        1024   2.3746490478515625E-007
+        2048   2.3460388183593750E-007
+        4096   2.6702880859375003E-007
+        8192   2.7942657470703123E-007
+       16384   2.8705596923828124E-007
+       32768   2.6416778564453127E-007
+       65536   2.8705596923828124E-007
+      131072   3.1948089599609377E-007
+      262144   3.0803680419921876E-007
+      524288   3.6334991455078126E-007
+     1048576   3.7002563476562501E-007"""
+    return res
+
+def get_hash_murmur():
+    res = """32   8.4877014160156246E-008
+          64   1.4686584472656250E-007
+         128   1.5735626220703126E-007
+         256   1.4972686767578125E-007
+         512   2.0027160644531249E-007
+        1024   1.6689300537109374E-007
+        2048   1.4972686767578125E-007
+        4096   1.5735626220703126E-007
+        8192   1.8119812011718750E-007
+       16384   1.7166137695312499E-007
+       32768   1.9645690917968749E-007
+       65536   1.8882751464843751E-007
+      131072   1.9168853759765626E-007
+      262144   2.0885467529296875E-007
+      524288   2.3937225341796875E-007
+     1048576   2.5653839111328127E-007"""
+    return res
+
 def lines_to_array(ls):
     res = []
     for l in ls.split("\n"):
@@ -69,12 +107,16 @@ def main():
     lin = lines_to_array(get_linear())
     tre = lines_to_array(get_treap())
     map = lines_to_array(get_map())
+    has = lines_to_array(get_hash_table())
+    mur = lines_to_array(get_hash_murmur())
 
     plt.rcParams["font.size"] = 16
     fig, ax = plt.subplots(tight_layout=True)
     ax.loglog(lin[0], lin[1], label="Linear array")
     ax.loglog(tre[0], tre[1], label="This module")
     ax.loglog(map[0], map[1], label="std::map")
+    ax.loglog(has[0], has[1], label="Hash table")
+    ax.loglog(mur[0], mur[1], label="Hash (murmur3)")
     ax.legend()
     ax.set_title("Cost of insert_or_assign")
     ax.set_xlabel("Number of elements")
