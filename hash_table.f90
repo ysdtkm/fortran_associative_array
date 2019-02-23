@@ -27,7 +27,10 @@ program hash_table  ! ttk module
   subroutine test()
     implicit none
     type(dictionary) :: di
-    call insert_or_assign(di, 1, 1)
+    integer :: i
+    do i = 1, 100
+      call insert_or_assign(di, i, i)
+    end do
     print *, di%flags
   end subroutine test
 
@@ -69,6 +72,7 @@ program hash_table  ! ttk module
 
   subroutine pure_insert(di, key, val)
     ! Dictionary is assumed to have enough space
+    ! ttk 重複処理
     implicit none
     type(dictionary), intent(inout) :: di
     keytype, intent(in) :: key
@@ -82,6 +86,7 @@ program hash_table  ! ttk module
         di%flags(addr) = used
         di%keys(addr) = key
         di%vals(addr) = val
+        di%num_elem = di%num_elem + 1
         overflow = .false.
         exit
       else
@@ -116,21 +121,13 @@ program hash_table  ! ttk module
     integer(4) :: i, n
     n = di%alloc_size
     if (n == 0) then
-      di%alloc_size = min_alloc
-      allocate(di%flags(di%alloc_size), &
-        &      di%keys(di%alloc_size), &
-        &      di%vals(di%alloc_size))
-      di%flags(:) = unused
+      call pure_alloc(di, min_alloc)
     else
       allocate(old_flags(n), old_keys(n), old_vals(n))
       old_flags = di%flags
       old_keys = di%keys
       old_vals = di%vals
-      di%alloc_size = 2 * n
-      allocate(di%flags(di%alloc_size), &
-        &      di%keys(di%alloc_size), &
-        &      di%vals(di%alloc_size))
-      di%flags(:) = unused
+      call pure_alloc(di, 2 * n)
       do i = 1, n
         if (old_flags(i) == used) then
           call pure_insert(di, old_keys(i), old_vals(i))
@@ -139,6 +136,17 @@ program hash_table  ! ttk module
       deallocate(old_flags, old_keys, old_vals)
     end if
   end subroutine rehash
+
+  subroutine pure_alloc(di, n)
+    type(dictionary), intent(inout) :: di
+    integer(4), intent(in) :: n
+    if (di%alloc_size > 0) deallocate(di%flags, di%keys, di%vals)
+    di%alloc_size = n
+    allocate(di%flags(n), di%keys(n), di%vals(n))
+    di%flags(:) = unused
+    di%num_elem = 0
+    di%num_del = 0
+  end subroutine pure_alloc
 
   ! exists
   ! get_val
