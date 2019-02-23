@@ -40,6 +40,9 @@ program hash_table  ! ttk module
     call get_keys_vals(di, keys, vals)
     print *, keys
     print *, vals
+    do i = 1, 10
+      call delete(di, i)
+    end do
   end subroutine test
 
   pure function fnv_1a_32_int(x)
@@ -73,7 +76,7 @@ program hash_table  ! ttk module
     valtype, intent(in) :: val
 
     if ((di%num_elem + di%num_del) * 2 >= di%alloc_size) then
-      call rehash(di)
+      call rehash(di, up=.true.)
     end if
     call pure_insert_or_assign(di, key, val)
   end subroutine insert_or_assign
@@ -123,9 +126,10 @@ program hash_table  ! ttk module
     increment = iand(addr, n - 1) + 1  ! 1-based
   end function increment
 
-  subroutine rehash(di)
+  subroutine rehash(di, up)
     implicit none
     type(dictionary), intent(inout) :: di
+    logical, intent(in) :: up
     integer(4), allocatable :: old_flags(:)
     keytype, allocatable :: old_keys(:)
     valtype, allocatable :: old_vals(:)
@@ -138,7 +142,11 @@ program hash_table  ! ttk module
       old_flags = di%flags
       old_keys = di%keys
       old_vals = di%vals
-      call pure_alloc(di, 2 * n)
+      if (up) then
+        call pure_alloc(di, 2 * n)
+      else
+        call pure_alloc(di, max(min_alloc, n / 4))
+      end if
       do i = 1, n
         if (old_flags(i) == used) then
           call pure_insert_or_assign(di, old_keys(i), old_vals(i))
@@ -211,6 +219,11 @@ program hash_table  ! ttk module
         stop 4
       else if (di%flags(addr) == used .and. di%keys(addr) == key) then
         di%flags(addr) = deleted
+        di%num_del = di%num_del + 1
+        di%num_elem = di%num_elem - 1
+        if (di%num_elem * 16 < di%alloc_size .and. di%alloc_size > min_alloc) then
+          call rehash(di, up=.false.)
+        end if
         exit
       else
         addr = increment(di%alloc_size, addr)
