@@ -11,7 +11,10 @@ else
 endif
 INCLUDE := -I.
 
-$(TARGET): sample.o dict_mod.o treap_struct.o hash_table.o
+exec: $(TARGET)
+	./$<
+
+$(TARGET): hash_table.o
 	$(FC) $(MACROS) $(FFLAGS) $(INCLUDE) $^ -o $@
 
 %.o: %.f90
@@ -19,10 +22,6 @@ $(TARGET): sample.o dict_mod.o treap_struct.o hash_table.o
 
 %.mod: %.o %.f90
 	@:
-
-sample.o: dict_mod.mod hash_table.mod
-dict_mod.o: treap_struct.mod dtypes.h
-treap_struct.o: dtypes.h
 
 clean:
 	rm -rf *.o *.mod *.gch *.log $(TARGET) core.*

@@ -1,7 +1,7 @@
 #define keytype integer(4)
 #define valtype integer(4)
 
-module hash_table
+program hash_table  ! ttk module
   implicit none
 
   integer(4), parameter :: min_alloc = 64
@@ -19,6 +19,12 @@ module hash_table
   end type dictionary
 
   contains
+
+  subroutine test()
+    implicit none
+    type(dictionary) :: di
+    call insert_or_assign(di, 1, 1)
+  end subroutine test
 
   subroutine insert_or_assign(di, key, val)
     implicit none
@@ -52,4 +58,4 @@ module hash_table
   ! get_size
   ! get_keys_vals
 
-end module hash_table
+end program hash_table
