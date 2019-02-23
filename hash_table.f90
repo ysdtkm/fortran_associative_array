@@ -1,8 +1,11 @@
 #define keytype integer(4)
 #define valtype real(4)
 
-program hash_table  ! ttk module
+module hash_table
   implicit none
+
+  private
+  public :: dictionary, insert_or_assign, exists, get_val, delete, get_size, get_keys_vals
 
   integer(4), parameter :: min_alloc = 64
   integer(4), parameter :: fnv_offset_basis_32 = -2128831035  ! 0x811c9dc5
@@ -20,55 +23,10 @@ program hash_table  ! ttk module
     valtype, allocatable :: vals(:)
   end type dictionary
 
-  call test()
-
   contains
-
-  subroutine test()
-    implicit none
-    integer, parameter :: jmax = 20
-    integer :: j, seed(100), itr, itrmax, dt, dummy, t_rate, n
-
-    seed(:) = 0
-    call random_seed(put=seed)
-    call system_clock(dummy, t_rate)
-
-    do j = 1, jmax
-      itrmax = 2 ** (jmax - j)
-      dt = 0
-      n = 2 ** j
-      do itr = 1, itrmax
-        dt = dt + test_hash_table(n)
-      end do
-      print *, n, dt / (dble(itrmax) * dble(t_rate) * n)
-    end do
-  end subroutine test
-
-  function test_hash_table(n)
-    implicit none
-    integer, intent(in) :: n
-    integer :: i, t1, t2
-    integer :: a(n)
-    integer :: test_hash_table
-    real(4) :: r
-    type(dictionary) :: t
-    do i = 1, n
-      call random_number(r)
-      a(i) = floor(r * n)
-    end do
-
-    call system_clock(t1)
-    do i = 1, n
-      call insert_or_assign(t, a(i), float(a(i)))
-    end do
-    call system_clock(t2)
-    test_hash_table = t2 - t1
-  end function test_hash_table
 
   pure function fnv_1a_32(c)
     implicit none
-    integer(4), parameter :: fnv_offset_basis_32 = -2128831035  ! 0x811c9dc5
-    integer(4), parameter :: fnv_prime_32 = 16777619
     integer(4) :: fnv_1a_32, i
     integer(1), intent(in) :: c(:)
     fnv_1a_32 = fnv_offset_basis_32
@@ -267,4 +225,4 @@ program hash_table  ! ttk module
       stop 5
     end if
   end subroutine get_keys_vals
-end program hash_table
+end module hash_table

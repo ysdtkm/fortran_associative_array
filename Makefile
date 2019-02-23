@@ -15,7 +15,7 @@ exec: $(TARGET)
 	./$<
 	gprof $< | gprof2dot | dot -Tpdf > graph.pdf
 
-$(TARGET): hash_table.o
+$(TARGET): test_hash_table.o hash_table.o
 	$(FC) $(MACROS) $(FFLAGS) $(INCLUDE) $^ -o $@
 
 %.o: %.f90
@@ -23,6 +23,8 @@ $(TARGET): hash_table.o
 
 %.mod: %.o %.f90
 	@:
+
+test_hash_table.o: hash_table.mod
 
 clean:
 	rm -rf *.o *.mod *.gch *.log $(TARGET) core.*
