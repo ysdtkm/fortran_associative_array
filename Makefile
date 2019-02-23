@@ -1,9 +1,9 @@
 TARGET = a.out
 FC = gfortran
-DEBUG = yes
+DEBUG = no
 
 ifeq ($(DEBUG),yes)
-  FFLAGS := -pg -cpp -Wall -Wuninitialized -O0 -g3 -fbounds-check \
+  FFLAGS := -cpp -Wall -Wuninitialized -O0 -g3 -fbounds-check \
             -fbacktrace -fdump-core -ffpe-trap=invalid,zero,overflow -fimplicit-none \
             -finit-real=snan -finit-integer=-858993460
 else
