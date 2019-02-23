@@ -18,7 +18,7 @@ program speedtest
   call system_clock(dummy, t_rate)
 
   do b = 0, 1
-    do j = 5, jmax
+    do j = 1, jmax
       if (b == 0 .and. j > ljmax) cycle
       if (b == 0) then
         itrmax = 2 ** (ljmax - j)
