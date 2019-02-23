@@ -1,6 +1,6 @@
 TARGET = a.out
 FC = gfortran
-DEBUG = no
+DEBUG = yes
 
 ifeq ($(DEBUG),yes)
   FFLAGS := -cpp -Wall -Wuninitialized -O0 -g3 -fbounds-check \
