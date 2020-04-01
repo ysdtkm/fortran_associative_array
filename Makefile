@@ -1,6 +1,6 @@
 TARGET = a.out
 FC = gfortran
-DEBUG = no
+DEBUG = yes
 
 ifeq ($(DEBUG),yes)
   FFLAGS := -cpp -Wall -Wuninitialized -O0 -g3 -fbounds-check \
@@ -13,7 +13,7 @@ INCLUDE := -I.
 
 exec: $(TARGET)
 	./$<
-	gprof $< | gprof2dot | dot -Tpdf > graph.pdf
+	gprof $< | gprof2dot -n 1 -e 1 | dot -Tpdf > graph.pdf
 
 $(TARGET): test_hash_table.o hash_table.o
 	$(FC) $(MACROS) $(FFLAGS) $(INCLUDE) $^ -o $@

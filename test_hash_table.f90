@@ -10,6 +10,7 @@ program test_hash_table
     integer :: a(n)
     integer :: time_hash_table
     real(4) :: r
+    character(50) :: s
     type(dictionary) :: t
     do i = 1, n
       call random_number(r)
@@ -18,7 +19,8 @@ program test_hash_table
 
     call system_clock(t1)
     do i = 1, n
-      call insert_or_assign(t, a(i), float(a(i)))
+      write (s, "(i0)") a(i)
+      call insert_or_assign(t, s, float(a(i)))
     end do
     call system_clock(t2)
     time_hash_table = t2 - t1

@@ -1,4 +1,4 @@
-#define keytype integer(4)
+#define keytype character(20)
 #define valtype real(4)
 
 module hash_table
@@ -24,6 +24,60 @@ module hash_table
   end type dictionary
 
   contains
+
+  pure function wrap_murmur(s) result(h)
+    keytype, intent(in) :: s
+    integer(4) :: p, q, h
+    integer(4), allocatable :: a(:)
+    integer(1), allocatable :: c(:)
+    p = storage_size(s) / (8 * 4)  ! 4バイト単位のカウント
+    q = mod(storage_size(s) / 8, 4)  ! バイト単位のカウント
+    allocate (a(p), c(q))
+    a = transfer(s, a, p)
+    c = transfer(s(p * 4 + 1:), c, q)
+    h = murmur3_32(a, c)
+  end function wrap_murmur
+
+  pure function murmur3_32(i, c) result(h)
+    ! https://en.wikipedia.org/wiki/MurmurHash#Algorithm
+    ! http://murmurhash.shorelabs.com/ でテストできる
+    integer(4), intent(in) :: i(:)
+    integer(1), intent(in) :: c(:)
+    integer(4) :: h, k, j
+    integer(4), parameter :: c1 = -862048943, c2 = 461845907, n = -430675100
+    integer(4), parameter :: c3 = -2048144789, c4 = -1028477387
+    h = 12345  ! seed
+
+    ! Digest 4-byte chunks
+    do j = 1, size(i)
+      k = i(j)
+      k = k * c1
+      k = ior(ishft(k, 15), ishft(k, -17))
+      k = k * c2
+      h = ieor(h, k)
+      h = ior(ishft(h, 13), ishft(h, -19))
+      h = h * 5 + n
+    end do
+
+    ! Digest byte chunks
+    k = 0
+    do j = size(c), 1, -1
+      k = ishft(k, 8)
+      k = ior(k, int(c(j)))
+    end do
+    k = k * c1
+    k = ior(ishft(k, 15), ishft(k, -17))
+    k = k * c2
+    h = ieor(h, k)
+
+    ! Finalize
+    h = ieor(h, 4 * size(i) + size(c))
+    h = ieor(h, ishft(h, -16))
+    h = h * c3
+    h = ieor(h, ishft(h, -13))
+    h = h * c4
+    h = ieor(h, ishft(h, -16))
+  end function murmur3_32
 
   pure function fnv_1a_32(c)
     implicit none
@@ -82,8 +136,9 @@ module hash_table
     integer(4), intent(in) :: n
     integer(4) :: get_initial_addr
     integer(1) :: c(4)
-    c = transfer(key, c)
-    get_initial_addr = fnv_1a_32(c)
+    ! c = transfer(key, c)
+    ! get_initial_addr = fnv_1a_32(c)
+    get_initial_addr = wrap_murmur(key)
     get_initial_addr = iand(get_initial_addr, n - 1) + 1  ! 1-based
   end function get_initial_addr
 
