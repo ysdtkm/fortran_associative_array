@@ -1,4 +1,4 @@
-#define keytype character(20)
+#define keytype character(10)
 #define valtype real(4)
 
 module hash_table
@@ -25,32 +25,35 @@ module hash_table
 
   contains
 
-  pure function wrap_murmur(s) result(h)
-    keytype, intent(in) :: s
-    integer(4) :: p, q, h
-    integer(4), allocatable :: a(:)
-    integer(1), allocatable :: c(:)
-    p = storage_size(s) / (8 * 4)  ! 4バイト単位のカウント
-    q = mod(storage_size(s) / 8, 4)  ! バイト単位のカウント
-    allocate (a(p), c(q))
-    a = transfer(s, a, p)
-    c = transfer(s(p * 4 + 1:), c, q)
-    h = murmur3_32(a, c)
-  end function wrap_murmur
+  ! pure function wrap_murmur(s) result(h)
+  !   keytype, intent(in) :: s
+  !   integer(4) :: p, q, h
+  !   integer(4), allocatable :: a(:)
+  !   integer(1), allocatable :: c(:)
+  !   p = storage_size(s) / (8 * 4)  ! 4バイト単位のカウント
+  !   q = mod(storage_size(s) / 8, 4)  ! バイト単位のカウント
+  !   allocate (a(p), c(q))
+  !   a = transfer(s, a, p)
+  !   c = transfer(s(p * 4 + 1:), c, q)
+  !   h = murmur3_32(a, c)
+  ! end function wrap_murmur
 
-  pure function murmur3_32(i, c) result(h)
+  pure function murmur3_32(s) result(h)
     ! https://en.wikipedia.org/wiki/MurmurHash#Algorithm
     ! http://murmurhash.shorelabs.com/ でテストできる
-    integer(4), intent(in) :: i(:)
-    integer(1), intent(in) :: c(:)
-    integer(4) :: h, k, j
+    keytype, intent(in) :: s
+    integer(1) :: c(1)
+    integer(4) :: h, k, j, i(1), p, q
     integer(4), parameter :: c1 = -862048943, c2 = 461845907, n = -430675100
     integer(4), parameter :: c3 = -2048144789, c4 = -1028477387
     h = 12345  ! seed
 
     ! Digest 4-byte chunks
-    do j = 1, size(i)
-      k = i(j)
+    p = storage_size(s) / (8 * 4)  ! 4バイト単位のカウント
+    q = mod(storage_size(s) / 8, 4)  ! バイト単位のカウント
+    do j = 1, p
+      i = transfer(s(j * 4 - 3:j * 4), i)
+      k = i(1)
       k = k * c1
       k = ior(ishft(k, 15), ishft(k, -17))
       k = k * c2
@@ -61,9 +64,10 @@ module hash_table
 
     ! Digest byte chunks
     k = 0
-    do j = size(c), 1, -1
+    do j = q, 1, -1
+      c = transfer(s(p * 4:), c, 1)
       k = ishft(k, 8)
-      k = ior(k, int(c(j)))
+      k = ior(k, int(c(1)))
     end do
     k = k * c1
     k = ior(ishft(k, 15), ishft(k, -17))
@@ -138,7 +142,7 @@ module hash_table
     integer(1) :: c(4)
     ! c = transfer(key, c)
     ! get_initial_addr = fnv_1a_32(c)
-    get_initial_addr = wrap_murmur(key)
+    get_initial_addr = murmur3_32(key)
     get_initial_addr = iand(get_initial_addr, n - 1) + 1  ! 1-based
   end function get_initial_addr
 
