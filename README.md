@@ -33,6 +33,8 @@ A scalable associative array (known as **hash table** or **dictionary**) for For
 
   <img src="test/speedtest/visual/out.png" width="50%">
 
+    * Personal note: with gfortran, function `transfer` seems slow for conversion between 1-byte objects (e.g., character) and 4-byte objects (e.g., integer(4)). In our experiments, MurMur3 implementation (which mainly digests 4-byte chunks) is fast for integer(4) keys but slow for character(\*) keys (relative to fnv-1a implementation which digests each byte).
+
 ## Usage
 * See `sample.f90` for sample usage
 * Edit `dtypes.h` if using another data types
